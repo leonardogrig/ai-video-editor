@@ -1,0 +1,71 @@
+// Project Structure
+// This is a Next.js application for video editing with silence removal and transcription
+// Key directories:
+// - app/ - Contains the main Next.js app code
+//   - page.tsx - Main application component
+//   - services/ - Service functions for video processing
+//   - styles/ - Contains neo-brutalism styling
+//   - api/ - Backend API routes for video processing and transcription
+// - components/ - React components
+//   - UI components for the video editor
+//   - types.ts - TypeScript interfaces
+// 
+// Key Features:
+// - Video silence removal
+// - Speech transcription
+// - Neo-brutalist UI design
+// 
+// Technology Stack:
+// - Next.js 15.x
+// - React 19
+// - TypeScript
+// - Tailwind CSS
+// - FFMPEG for video processing
+// - OpenAI API for transcription
+// 
+// Package Management:
+// - Uses yarn for dependency management
+// 
+// Development workflow:
+// - yarn dev - runs the development server with turbopack
+// - yarn build - builds the application for production
+// - yarn start - starts the production server 
+// 
+// Additional Notes:
+// - Never perform yarn dev unless explicitly instructed to do so
+// - Always check for FFMPEG installation before running video processing
+// - Ensure API keys are properly set in .env.local
+// - Test with small videos (1-2 minutes) first
+// - Follow neo-brutalist design principles for UI components
+// - Use TypeScript for all new components and functions
+// - Keep video processing operations in the services directory
+// - Maintain proper error handling for API calls
+// - Document any new features or changes
+// - Follow the MIT license requirements
+// - Keep the codebase clean and well-organized
+// - Use proper TypeScript types for all variables and functions
+// - Follow the project's coding style and conventions
+// - Test thoroughly before committing changes
+// - Keep dependencies up to date
+// - Document any new dependencies
+// - Follow security best practices
+// - Keep the README.md up to date
+// - Use proper git commit messages
+// - Follow the project's branching strategy
+// - Keep the codebase modular and maintainable
+// - Use proper error handling for all operations
+// - Follow the project's testing strategy
+// - Keep the documentation up to date
+// - Follow the project's deployment strategy
+// - Keep the codebase secure
+// - Follow the project's security guidelines
+// - Keep the codebase performant
+// - Follow the project's performance guidelines
+// - Keep the codebase accessible
+// - Follow the project's accessibility guidelines
+// - Keep the codebase maintainable
+// - Follow the project's maintainability guidelines
+// - Keep the codebase scalable
+// - Follow the project's scalability guidelines
+// - Keep the codebase reliable
+// - Follow the project's reliability guidelines
