@@ -49,11 +49,13 @@ interface SilenceRemovalCardProps {
   transcriptionError: string | null;
   selectedLanguage: string;
   supportedLanguages: string[];
+  transcriptionProvider: string;
   onRemoveSilence: () => void;
   onApplyChanges: () => void;
   onDialogControlChange: (key: keyof DialogControls, value: number) => void;
   onTranscribe: () => void;
   onLanguageChange: (language: string) => void;
+  onProviderChange: (providerId: string) => void;
   onDiscardTranscription: () => void;
   onDialogOpen: () => void;
   onCreateThresholdRequest?: () => void;
@@ -85,11 +87,13 @@ export function SilenceRemovalCard({
   transcriptionError,
   selectedLanguage,
   supportedLanguages,
+  transcriptionProvider,
   onRemoveSilence,
   onApplyChanges,
   onDialogControlChange,
   onTranscribe,
   onLanguageChange,
+  onProviderChange,
   onDiscardTranscription,
   onDialogOpen,
   onCreateThresholdRequest,
@@ -159,6 +163,7 @@ export function SilenceRemovalCard({
                 audioUrl={audioUrl}
                 selectedLanguage={selectedLanguage}
                 supportedLanguages={supportedLanguages}
+                transcriptionProvider={transcriptionProvider}
                 isDialogProcessing={isDialogProcessing}
                 isCreatingRequest={isCreatingRequest}
                 isReadingResponse={isReadingResponse}
@@ -172,6 +177,7 @@ export function SilenceRemovalCard({
                 onApplyChanges={onApplyChanges}
                 onTranscribe={onTranscribe}
                 onLanguageChange={onLanguageChange}
+                onProviderChange={onProviderChange}
                 onCreateThresholdRequest={onCreateThresholdRequest}
                 onSetThresholdFromResponse={onSetThresholdFromResponse}
                 progressButton={progressButton}

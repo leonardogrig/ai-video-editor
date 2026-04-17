@@ -128,6 +128,24 @@ export default function Home() {
     null
   );
   const [selectedLanguage, setSelectedLanguage] = useState<string>("english");
+  const [transcriptionProvider, setTranscriptionProviderState] =
+    useState<string>("groq");
+
+  // Load persisted provider choice
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const stored = window.localStorage.getItem("transcriptionProvider");
+    if (stored === "groq" || stored === "elevenlabs") {
+      setTranscriptionProviderState(stored);
+    }
+  }, []);
+
+  const setTranscriptionProvider = (providerId: string) => {
+    setTranscriptionProviderState(providerId);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("transcriptionProvider", providerId);
+    }
+  };
 
   const [totalSegmentDuration, setTotalSegmentDuration] = useState<number>(0);
   const [originalDuration, setOriginalDuration] = useState<number>(0);
@@ -314,7 +332,8 @@ export default function Home() {
             });
           }
         },
-        uploadInfo || undefined
+        uploadInfo || undefined,
+        transcriptionProvider
       );
 
       const typedResult = result as { segments?: SpeechSegment[] };
@@ -706,11 +725,13 @@ export default function Home() {
                 transcriptionError={transcriptionError}
                 selectedLanguage={selectedLanguage}
                 supportedLanguages={supportedLanguages}
+                transcriptionProvider={transcriptionProvider}
                 onRemoveSilence={handleRemoveSilence}
                 onApplyChanges={handleApplyChanges}
                 onDialogControlChange={handleDialogControlChange}
                 onTranscribe={handleTranscribe}
                 onLanguageChange={setSelectedLanguage}
+                onProviderChange={setTranscriptionProvider}
                 onDiscardTranscription={handleDiscardTranscription}
                 onDialogOpen={handleDialogOpen}
                 onCreateThresholdRequest={handleCreateThresholdRequest}

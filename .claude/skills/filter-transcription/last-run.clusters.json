@@ -1,0 +1,4204 @@
+{
+  "clusters": [
+    {
+      "size": 2,
+      "kept_start": 24.97,
+      "members": [
+        {
+          "start": 14.41,
+          "end": 18.8,
+          "text": "Hey there, it's Leo from Firecrawl and in this video we'll be taking a look at the new routines inside of Cloud Kode."
+        },
+        {
+          "start": 24.97,
+          "end": 29.57,
+          "text": "Hey there, it's Leo from Firecrawl and in this video we'll be taking a look at the new routines inside of Claude Code."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 34.21,
+      "members": [
+        {
+          "start": 34.21,
+          "end": 36.02,
+          "text": "--in combination with an app."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 36.4,
+      "members": [
+        {
+          "start": 36.4,
+          "end": 39.05,
+          "text": "In this case, built inside of a Next.js environment."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 68.23,
+      "members": [
+        {
+          "start": 68.23,
+          "end": 71.09,
+          "text": "To produce a nearly infinite amount of blog posts."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 103.66,
+      "members": [
+        {
+          "start": 103.66,
+          "end": 107.54,
+          "text": "But first, just have in mind that you don't want to be creating generic blog posts."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 115.93,
+      "members": [
+        {
+          "start": 115.93,
+          "end": 116.27,
+          "text": "Post."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 116.68,
+      "members": [
+        {
+          "start": 116.68,
+          "end": 117.56,
+          "text": "First, having mine."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 121.6,
+      "members": [
+        {
+          "start": 121.6,
+          "end": 122.09,
+          "text": "Blog."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 122.17,
+      "members": [
+        {
+          "start": 122.17,
+          "end": 124.97,
+          "text": "Posts just because it's easy to do so."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 130.42,
+      "members": [
+        {
+          "start": 130.42,
+          "end": 135.08,
+          "text": "Now, have in mind that you don't want to be creating generic blog posts and that's easy to do with AI."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 135.31,
+      "members": [
+        {
+          "start": 135.31,
+          "end": 139.37,
+          "text": "Since if you don't give it enough context this is what will happen."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 169.12,
+      "members": [
+        {
+          "start": 169.12,
+          "end": 172.82,
+          "text": "For example, if I had to write a blog post around routines of."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 174.4,
+      "members": [
+        {
+          "start": 174.4,
+          "end": 174.8,
+          "text": "(heavy metal music) Fourth?"
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 184.81,
+      "members": [
+        {
+          "start": 184.81,
+          "end": 186.08,
+          "text": "It's a new topic."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 191.38,
+      "members": [
+        {
+          "start": 191.38,
+          "end": 194.81,
+          "text": "For example, if I wanted to write something around agentic coding (keyboard typing sounds)"
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 194.89,
+      "members": [
+        {
+          "start": 194.89,
+          "end": 196.67,
+          "text": "And I didn't give it enough context."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 196.87,
+      "members": [
+        {
+          "start": 196.87,
+          "end": 197.63,
+          "text": "Mm-hmm."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 202.03,
+      "members": [
+        {
+          "start": 202.03,
+          "end": 205.52,
+          "text": "Probably it would fetch instead of what it has from its training."
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "kept_start": 229.99,
+      "members": [
+        {
+          "start": 206.38,
+          "end": 210.74,
+          "text": "Probably it would look inside of its training and find whatever it has around agent X."
+        },
+        {
+          "start": 220.9,
+          "end": 223.34,
+          "text": "Probably it would look inside of its own training."
+        },
+        {
+          "start": 229.99,
+          "end": 231.95,
+          "text": "Probably it would look inside of its own training."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 210.82,
+      "members": [
+        {
+          "start": 210.82,
+          "end": 211.28,
+          "text": "Holding."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 223.39,
+      "members": [
+        {
+          "start": 223.39,
+          "end": 226.31,
+          "text": "See something from Cursor or a Cloud Code."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 227.32,
+      "members": [
+        {
+          "start": 227.32,
+          "end": 227.72,
+          "text": "Mm-hmm."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 227.98,
+      "members": [
+        {
+          "start": 227.98,
+          "end": 229.34,
+          "text": "Five, six months ago?"
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 232.27,
+      "members": [
+        {
+          "start": 232.27,
+          "end": 234.47,
+          "text": "Probably it would look inside of its own training. (clicking sound)"
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 256.42,
+      "members": [
+        {
+          "start": 256.42,
+          "end": 257.69,
+          "text": "From six months ago?"
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 258.25,
+      "members": [
+        {
+          "start": 258.25,
+          "end": 259.76,
+          "text": "isn't really what we're looking for."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 269.02,
+      "members": [
+        {
+          "start": 269.02,
+          "end": 270.47,
+          "text": "But if you add a- (sighs)"
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 280.39,
+      "members": [
+        {
+          "start": 277.36,
+          "end": 278.96,
+          "text": "But if you tell it, you want recent."
+        },
+        {
+          "start": 280.39,
+          "end": 282.8,
+          "text": "But if you tell it something like, hey, I want recent news."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 283.03,
+      "members": [
+        {
+          "start": 283.03,
+          "end": 284,
+          "text": "It will probably... (clicks tongue)"
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 305.41,
+      "members": [
+        {
+          "start": 305.41,
+          "end": 306.68,
+          "text": "Fetch for recent data."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 310.18,
+      "members": [
+        {
+          "start": 310.18,
+          "end": 312.68,
+          "text": "Then it should be able to write a much better article."
+        }
+      ]
+    },
+    {
+      "size": 5,
+      "kept_start": 359.38,
+      "members": [
+        {
+          "start": 338.2,
+          "end": 340.04,
+          "text": "Earlier today, I created this blog post."
+        },
+        {
+          "start": 340.39,
+          "end": 341.96,
+          "text": "Earlier today, I created this blog post."
+        },
+        {
+          "start": 342.61,
+          "end": 344.48,
+          "text": "Earlier today, I created this blog."
+        },
+        {
+          "start": 344.95,
+          "end": 347.09,
+          "text": "Earlier today, I created this personal blog."
+        },
+        {
+          "start": 359.38,
+          "end": 361.25,
+          "text": "Earlier today, I created this personal blog."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 366.16,
+      "members": [
+        {
+          "start": 366.16,
+          "end": 367.01,
+          "text": "PA next year."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 367.06,
+      "members": [
+        {
+          "start": 367.06,
+          "end": 367.64,
+          "text": "Projects."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 367.87,
+      "members": [
+        {
+          "start": 367.87,
+          "end": 369.32,
+          "text": "It should be a personal blog."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 372.1,
+      "members": [
+        {
+          "start": 372.1,
+          "end": 374.81,
+          "text": "I overall describe how the design should go about."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 380.74,
+      "members": [
+        {
+          "start": 380.74,
+          "end": 384.14,
+          "text": "As well as the idea of focusing on SEO and GO."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 404.35,
+      "members": [
+        {
+          "start": 404.35,
+          "end": 406.67,
+          "text": "Finally, I added the need for three different skills."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 406.87,
+      "members": [
+        {
+          "start": 406.87,
+          "end": 408.05,
+          "text": "One for my voice."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 411.91,
+      "members": [
+        {
+          "start": 411.91,
+          "end": 413.27,
+          "text": "Update blog posts."
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "kept_start": 442.39,
+      "members": [
+        {
+          "start": 421.87,
+          "end": 425.54,
+          "text": "It then proceeded to create the website, which is exactly this one."
+        },
+        {
+          "start": 435.58,
+          "end": 437.27,
+          "text": "It then proceeded to create the blog."
+        },
+        {
+          "start": 442.39,
+          "end": 444.05,
+          "text": "It then proceeded to create the blog."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 425.62,
+      "members": [
+        {
+          "start": 425.62,
+          "end": 426.23,
+          "text": "As soon as you"
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 426.37,
+      "members": [
+        {
+          "start": 426.37,
+          "end": 426.92,
+          "text": "Click."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 433.12,
+      "members": [
+        {
+          "start": 433.12,
+          "end": 433.52,
+          "text": "Have."
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 452.5,
+      "members": [
+        {
+          "start": 438.16,
+          "end": 439.49,
+          "text": "... looks exactly like this."
+        },
+        {
+          "start": 452.5,
+          "end": 454.37,
+          "text": "Which looks exactly like this."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 444.25,
+      "members": [
+        {
+          "start": 444.25,
+          "end": 444.77,
+          "text": "In the-- (clears throat)"
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 449.86,
+      "members": [
+        {
+          "start": 445.63,
+          "end": 446.96,
+          "text": "It then proceeded to create the blog."
+        },
+        {
+          "start": 449.86,
+          "end": 452.39,
+          "text": "It then proceeded to create the actual vlog."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 477.58,
+      "members": [
+        {
+          "start": 477.58,
+          "end": 479.42,
+          "text": "You get a nice structured text."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 486.34,
+      "members": [
+        {
+          "start": 486.34,
+          "end": 487.19,
+          "text": "Pretty neat design."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 491.38,
+      "members": [
+        {
+          "start": 491.38,
+          "end": 492.38,
+          "text": "...pretty simple design."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 513.73,
+      "members": [
+        {
+          "start": 513.73,
+          "end": 514.61,
+          "text": "Perfect result."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 518.11,
+      "members": [
+        {
+          "start": 518.11,
+          "end": 522.14,
+          "text": "On the first run, you might not get the perfect results so some iterations might be needed. (keyboard clicks and music)"
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 522.28,
+      "members": [
+        {
+          "start": 522.28,
+          "end": 524.18,
+          "text": "This one is for the layout shift."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 525.31,
+      "members": [
+        {
+          "start": 525.31,
+          "end": 526.04,
+          "text": "As well."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 526.99,
+      "members": [
+        {
+          "start": 526.99,
+          "end": 529.58,
+          "text": "Theme Toggler, which was not implemented initially."
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "kept_start": 546.01,
+      "members": [
+        {
+          "start": 536.98,
+          "end": 539.72,
+          "text": "Then I had it install the FireCrawl skill."
+        },
+        {
+          "start": 541.99,
+          "end": 544.76,
+          "text": "Then down here, I had it install the fire crawl skill."
+        },
+        {
+          "start": 546.01,
+          "end": 547.31,
+          "text": "Then down here, I had it."
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "kept_start": 592.3,
+      "members": [
+        {
+          "start": 569.53,
+          "end": 572.21,
+          "text": "Then down here, I had it add all of the fire claw skills."
+        },
+        {
+          "start": 574.93,
+          "end": 576.14,
+          "text": "Then down here I had it."
+        },
+        {
+          "start": 577.57,
+          "end": 581.3,
+          "text": "Then down here, I had it add all of the FireCrawl skills which are these ones (mouse clicks)."
+        },
+        {
+          "start": 592.3,
+          "end": 596.15,
+          "text": "Then down here, I had it add all of the firecrawl skills from the CLI."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 596.41,
+      "members": [
+        {
+          "start": 596.41,
+          "end": 600.02,
+          "text": "So here you can get access to the FireCrawl interact map scrape search."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 605.47,
+      "members": [
+        {
+          "start": 605.47,
+          "end": 608.69,
+          "text": "Should help your agent fetch for all the context that it needs."
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "kept_start": 639.79,
+      "members": [
+        {
+          "start": 618.43,
+          "end": 620.63,
+          "text": "Eventually, all of these firefall skills were copied."
+        },
+        {
+          "start": 626.2,
+          "end": 628.07,
+          "text": "Eventually, all of these cloud skills were added."
+        },
+        {
+          "start": 639.79,
+          "end": 641.72,
+          "text": "Eventually, all of the skills were added."
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 665.29,
+      "members": [
+        {
+          "start": 654.16,
+          "end": 657.74,
+          "text": "Eventually all of the schools were added, I made a brief change to the layout."
+        },
+        {
+          "start": 665.29,
+          "end": 667.25,
+          "text": "I made a brief change to the design."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 660.85,
+      "members": [
+        {
+          "start": 660.85,
+          "end": 662.51,
+          "text": "Eventually, all of the skills were added."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 709.21,
+      "members": [
+        {
+          "start": 709.21,
+          "end": 711.77,
+          "text": "Now, before I move forward with the actual routines of Claude."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 725.14,
+      "members": [
+        {
+          "start": 725.14,
+          "end": 728.12,
+          "text": "I don't really appreciate the vibe coding aspect."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 733.33,
+      "members": [
+        {
+          "start": 733.33,
+          "end": 733.94,
+          "text": "No, no."
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "kept_start": 761.83,
+      "members": [
+        {
+          "start": 736.75,
+          "end": 739.88,
+          "text": "Now, I know I'm taking a bit long to get to the actual routines."
+        },
+        {
+          "start": 751.69,
+          "end": 754.73,
+          "text": "I know I'm taking a bit long to get to the actual routines from Cloud Code."
+        },
+        {
+          "start": 760.21,
+          "end": 761.3,
+          "text": "I know I'm taking a bit longer."
+        },
+        {
+          "start": 761.83,
+          "end": 765.17,
+          "text": "I know I'm taking a bit long to get to the actual routines feature from Cloud Code."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 765.43,
+      "members": [
+        {
+          "start": 765.43,
+          "end": 770.39,
+          "text": "But I believe it's really important for us to understand how those routines will be used inside of your project."
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "kept_start": 785.11,
+      "members": [
+        {
+          "start": 770.44,
+          "end": 772.88,
+          "text": "And actually understand how your project works."
+        },
+        {
+          "start": 779.35,
+          "end": 781.4,
+          "text": "And actually understand how your project works."
+        },
+        {
+          "start": 785.11,
+          "end": 787.25,
+          "text": "And actually understand how your project works."
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 841.9,
+      "members": [
+        {
+          "start": 838.03,
+          "end": 841.4,
+          "text": "You really need to double check before having something run on your computer."
+        },
+        {
+          "start": 841.9,
+          "end": 844.88,
+          "text": "You really need to double check before having something run on your computer."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 844.96,
+      "members": [
+        {
+          "start": 844.96,
+          "end": 846.62,
+          "text": "Without you actively being there."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 869.92,
+      "members": [
+        {
+          "start": 869.92,
+          "end": 872.21,
+          "text": "From those prompts the project created was this one."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 874.78,
+      "members": [
+        {
+          "start": 874.78,
+          "end": 876.44,
+          "text": "Skill.md file."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 897.37,
+      "members": [
+        {
+          "start": 897.37,
+          "end": 899.24,
+          "text": "That specifies everything I need to get started."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 911.65,
+      "members": [
+        {
+          "start": 911.65,
+          "end": 913.64,
+          "text": "In the create post skill, for example."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 913.69,
+      "members": [
+        {
+          "start": 913.69,
+          "end": 915.8,
+          "text": "It does check for duplicates."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 926.53,
+      "members": [
+        {
+          "start": 926.53,
+          "end": 930.68,
+          "text": "So that we're not having our agent just fetch for the same topic over and over. (clicks tongue)"
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 975.7,
+      "members": [
+        {
+          "start": 975.7,
+          "end": 979.37,
+          "text": "Now another detail about this project is how these posts are generated."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 995.26,
+      "members": [
+        {
+          "start": 995.26,
+          "end": 996.38,
+          "text": "...Posts are stored."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 996.73,
+      "members": [
+        {
+          "start": 996.73,
+          "end": 999.26,
+          "text": "They are stored as a MDX file."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1032.64,
+      "members": [
+        {
+          "start": 1032.64,
+          "end": 1033.01,
+          "text": "Mmm."
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "kept_start": 1045.75,
+      "members": [
+        {
+          "start": 1033.39,
+          "end": 1034.93,
+          "text": "Which contains a metadata."
+        },
+        {
+          "start": 1043.89,
+          "end": 1045.28,
+          "text": "Which contains a metadata-- (smacks lips)"
+        },
+        {
+          "start": 1045.75,
+          "end": 1047.62,
+          "text": "Which contains a metadata. (smacks lips)"
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1057,
+      "members": [
+        {
+          "start": 1057,
+          "end": 1061.33,
+          "text": "which contains a metadata that allows me to structure whatever is in there."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1061.56,
+      "members": [
+        {
+          "start": 1061.56,
+          "end": 1062.98,
+          "text": "Throughout my blog post."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1078.78,
+      "members": [
+        {
+          "start": 1078.78,
+          "end": 1079.96,
+          "text": "--are set here."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1080.04,
+      "members": [
+        {
+          "start": 1080.04,
+          "end": 1080.62,
+          "text": "Umm."
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 1088.2,
+      "members": [
+        {
+          "start": 1081.93,
+          "end": 1083.68,
+          "text": "Are all set here as labels."
+        },
+        {
+          "start": 1088.2,
+          "end": 1090.82,
+          "text": "Are all set here as labels for the article."
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 1125.43,
+      "members": [
+        {
+          "start": 1114.06,
+          "end": 1114.76,
+          "text": "Mm-hmm."
+        },
+        {
+          "start": 1125.43,
+          "end": 1126.07,
+          "text": "Mm-hmm."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1114.81,
+      "members": [
+        {
+          "start": 1114.81,
+          "end": 1115.36,
+          "text": "Posted."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1129.66,
+      "members": [
+        {
+          "start": 1129.66,
+          "end": 1131.89,
+          "text": "I cannot visualize that specific article."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1134.79,
+      "members": [
+        {
+          "start": 1134.79,
+          "end": 1137.17,
+          "text": "And now if I refresh, I can see... (clicking)"
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1137.88,
+      "members": [
+        {
+          "start": 1137.88,
+          "end": 1138.91,
+          "text": "Specific article."
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 1156.78,
+      "members": [
+        {
+          "start": 1145.95,
+          "end": 1148.03,
+          "text": "Now, all this is very well documented."
+        },
+        {
+          "start": 1156.78,
+          "end": 1158.74,
+          "text": "Now, all this is very well-documented."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1151.5,
+      "members": [
+        {
+          "start": 1151.5,
+          "end": 1152.26,
+          "text": "... post skills."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1159.99,
+      "members": [
+        {
+          "start": 1159.99,
+          "end": 1160.72,
+          "text": "Post skill."
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 1182.04,
+      "members": [
+        {
+          "start": 1174.66,
+          "end": 1177.28,
+          "text": "With all that in mind now, we finally get to the routines. (music)"
+        },
+        {
+          "start": 1182.04,
+          "end": 1186.76,
+          "text": "All right, with all that really well documented, now we finally get to the daily blog writer. (instrumental music)"
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1190.26,
+      "members": [
+        {
+          "start": 1190.26,
+          "end": 1192.28,
+          "text": "Now we can finally create a routine."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1211.41,
+      "members": [
+        {
+          "start": 1211.41,
+          "end": 1214.9,
+          "text": "Now, inside of this routine, all I want to add inside of the instructions."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1215.04,
+      "members": [
+        {
+          "start": 1215.04,
+          "end": 1217.18,
+          "text": "Is write an article for my blog."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1221.7,
+      "members": [
+        {
+          "start": 1221.7,
+          "end": 1222.91,
+          "text": "To get all the context."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1223.26,
+      "members": [
+        {
+          "start": 1223.26,
+          "end": 1225.31,
+          "text": "If from your research using Fireground."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1225.48,
+      "members": [
+        {
+          "start": 1225.48,
+          "end": 1228.34,
+          "text": "From the past 24 hours you understand a blog post."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1232.53,
+      "members": [
+        {
+          "start": 1232.53,
+          "end": 1234.73,
+          "text": "You understand a blog post needs to be updated."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1235.65,
+      "members": [
+        {
+          "start": 1235.65,
+          "end": 1236.47,
+          "text": "... apply the update."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1241.95,
+      "members": [
+        {
+          "start": 1241.95,
+          "end": 1242.77,
+          "text": "The MDX."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1254.07,
+      "members": [
+        {
+          "start": 1254.07,
+          "end": 1256.72,
+          "text": "Please maintain as a draft and when done writing the MDX."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1257.13,
+      "members": [
+        {
+          "start": 1257.13,
+          "end": 1260.74,
+          "text": "Then you're done with the task. Don't wait for any further instructions."
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 1267.51,
+      "members": [
+        {
+          "start": 1265.29,
+          "end": 1266.98,
+          "text": "I specify where my project is."
+        },
+        {
+          "start": 1267.51,
+          "end": 1271.78,
+          "text": "I specify where my project is and by the way if you have this inside of a GitHub folder."
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 1276.75,
+      "members": [
+        {
+          "start": 1272.7,
+          "end": 1276.13,
+          "text": "I do specify where my project is since I want this to run locally."
+        },
+        {
+          "start": 1276.75,
+          "end": 1280.12,
+          "text": "I do specify where my project is since I do want to run this locally."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1283.8,
+      "members": [
+        {
+          "start": 1283.8,
+          "end": 1285.55,
+          "text": "(techno music) Repository inside of GitHub."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1299.64,
+      "members": [
+        {
+          "start": 1299.64,
+          "end": 1300.67,
+          "text": "And either have."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1305.25,
+      "members": [
+        {
+          "start": 1305.25,
+          "end": 1306.13,
+          "text": "A deploy."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1306.27,
+      "members": [
+        {
+          "start": 1306.27,
+          "end": 1310,
+          "text": "Or just use the deploy link from your easy panel instance."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1320.37,
+      "members": [
+        {
+          "start": 1320.37,
+          "end": 1321.85,
+          "text": "This way, you can completely-- (clicks mouse)"
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1336.78,
+      "members": [
+        {
+          "start": 1336.78,
+          "end": 1339.13,
+          "text": "Published without you really having to do anything."
+        }
+      ]
+    },
+    {
+      "size": 5,
+      "kept_start": 1357.09,
+      "members": [
+        {
+          "start": 1345.39,
+          "end": 1346,
+          "text": "So I said."
+        },
+        {
+          "start": 1346.47,
+          "end": 1348.52,
+          "text": "So I set this routine to repeat every."
+        },
+        {
+          "start": 1348.84,
+          "end": 1351.61,
+          "text": "So I set this routine to repeat every day at 9 a.m."
+        },
+        {
+          "start": 1353.64,
+          "end": 1356.56,
+          "text": "So I set this tool to repeat every day at 9 a.m."
+        },
+        {
+          "start": 1357.09,
+          "end": 1359.74,
+          "text": "So I set this tool to repeat every day at 9 a.m."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1403.35,
+      "members": [
+        {
+          "start": 1403.35,
+          "end": 1404.2,
+          "text": "So let's hit run."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1411.39,
+      "members": [
+        {
+          "start": 1411.39,
+          "end": 1415.18,
+          "text": "It basically sends off that prompt as if you were working inside of a cloud code."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1415.29,
+      "members": [
+        {
+          "start": 1415.29,
+          "end": 1417.25,
+          "text": "But it's set on a routine, so- (clicks tongue)"
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 1423.09,
+      "members": [
+        {
+          "start": 1419.97,
+          "end": 1422.62,
+          "text": "You don't have to manually- you don't have to manually do it."
+        },
+        {
+          "start": 1423.09,
+          "end": 1424.9,
+          "text": "You don't have to manually execute it."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1436.74,
+      "members": [
+        {
+          "start": 1436.74,
+          "end": 1438.19,
+          "text": "Right now, it already-- Right?"
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "kept_start": 1445.38,
+      "members": [
+        {
+          "start": 1438.36,
+          "end": 1440.89,
+          "text": "Right about now, it already understood everything it needs to do."
+        },
+        {
+          "start": 1443.49,
+          "end": 1445.18,
+          "text": "Right about now, it understood everything."
+        },
+        {
+          "start": 1445.38,
+          "end": 1449.23,
+          "text": "Right about now, it understood everything it needs to do and started doing its research."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1449.58,
+      "members": [
+        {
+          "start": 1449.58,
+          "end": 1453.1,
+          "text": "So the search is being handled from FireCrawl."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1459.24,
+      "members": [
+        {
+          "start": 1459.24,
+          "end": 1460.81,
+          "text": "...erfectly, all of the flags."
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 1464.7,
+      "members": [
+        {
+          "start": 1462.78,
+          "end": 1463.9,
+          "text": "As you can see right here."
+        },
+        {
+          "start": 1464.7,
+          "end": 1468.28,
+          "text": "As you can see right here, the CLI is handled perfectly from Cloud Code."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1472.65,
+      "members": [
+        {
+          "start": 1472.65,
+          "end": 1474.79,
+          "text": "... search specifically for what it needs."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1482.97,
+      "members": [
+        {
+          "start": 1482.97,
+          "end": 1485.56,
+          "text": "It also did some research on Cloud CLI news."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1487.8,
+      "members": [
+        {
+          "start": 1487.8,
+          "end": 1489.49,
+          "text": "It's also doing some research on a clock."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1497.1,
+      "members": [
+        {
+          "start": 1497.1,
+          "end": 1499.51,
+          "text": "Agentic coding news from the past week."
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "kept_start": 1524.52,
+      "members": [
+        {
+          "start": 1512.88,
+          "end": 1514.72,
+          "text": "All this is saved to the file system."
+        },
+        {
+          "start": 1519.45,
+          "end": 1521.98,
+          "text": "All this is then saved to the file system."
+        },
+        {
+          "start": 1524.52,
+          "end": 1526.96,
+          "text": "All of this is now saved to the file system."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1542.94,
+      "members": [
+        {
+          "start": 1542.94,
+          "end": 1546.07,
+          "text": "It should then start working on actually producing the article."
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "kept_start": 1603.33,
+      "members": [
+        {
+          "start": 1584.16,
+          "end": 1586.18,
+          "text": "And again, this is running on my computer."
+        },
+        {
+          "start": 1600.78,
+          "end": 1603.1,
+          "text": "And again, this is all running inside of my own computer."
+        },
+        {
+          "start": 1603.33,
+          "end": 1606.58,
+          "text": "And again, this is all being executed inside of my own local computer."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1599.25,
+      "members": [
+        {
+          "start": 1599.25,
+          "end": 1599.83,
+          "text": "In serve."
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "kept_start": 1639,
+      "members": [
+        {
+          "start": 1629.4,
+          "end": 1630.01,
+          "text": "Your Mac."
+        },
+        {
+          "start": 1633,
+          "end": 1635.5,
+          "text": "Your Mac turned on to create the actual blog post."
+        },
+        {
+          "start": 1635.94,
+          "end": 1638.44,
+          "text": "Your Mac turned on to create the actual blog post."
+        },
+        {
+          "start": 1639,
+          "end": 1641.56,
+          "text": "Your Mac turned on to create the actual blog posts."
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 1684.66,
+      "members": [
+        {
+          "start": 1677.4,
+          "end": 1679.87,
+          "text": "Okay, this took around four minutes and a half."
+        },
+        {
+          "start": 1684.66,
+          "end": 1690.28,
+          "text": "All right, this took around four minutes and a half and the MDX was generated. You can actually click on the link."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1680.04,
+      "members": [
+        {
+          "start": 1680.04,
+          "end": 1682.66,
+          "text": "And the MDX was generated right away."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1720.42,
+      "members": [
+        {
+          "start": 1720.42,
+          "end": 1721.93,
+          "text": "Asking Cloud to do it here."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1732.36,
+      "members": [
+        {
+          "start": 1732.36,
+          "end": 1734.41,
+          "text": "Change something you didn't like or add."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1735.36,
+      "members": [
+        {
+          "start": 1735.36,
+          "end": 1739.93,
+          "text": "And then after reading through it if you want to change something you can ask Claude in here to do that for you."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1740.22,
+      "members": [
+        {
+          "start": 1740.22,
+          "end": 1743.8,
+          "text": "Or if you want to post it, you can also ask Claude to do so."
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 1757.05,
+      "members": [
+        {
+          "start": 1749.61,
+          "end": 1753.22,
+          "text": "Or you can just edit the MDX and change from true to false."
+        },
+        {
+          "start": 1757.05,
+          "end": 1760.36,
+          "text": "Or you can just edit the MDX and change the parameter draft."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1760.44,
+      "members": [
+        {
+          "start": 1760.44,
+          "end": 1761.95,
+          "text": "From true to false?"
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1764.16,
+      "members": [
+        {
+          "start": 1764.16,
+          "end": 1766.27,
+          "text": "You should be able to go back to the project."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1767.7,
+      "members": [
+        {
+          "start": 1767.7,
+          "end": 1769.06,
+          "text": "Post that was just generated."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1798.39,
+      "members": [
+        {
+          "start": 1798.39,
+          "end": 1800.53,
+          "text": "Actually, this one was created previously."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1805.41,
+      "members": [
+        {
+          "start": 1805.41,
+          "end": 1806.74,
+          "text": "This is the new one."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1806.82,
+      "members": [
+        {
+          "start": 1806.82,
+          "end": 1807.22,
+          "text": "Okay."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1830.37,
+      "members": [
+        {
+          "start": 1830.37,
+          "end": 1831.13,
+          "text": "So that's it."
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "kept_start": 1851.7,
+      "members": [
+        {
+          "start": 1834.27,
+          "end": 1835.06,
+          "text": "That's basically it."
+        },
+        {
+          "start": 1842.97,
+          "end": 1844.39,
+          "text": "That's basically it. And like it?"
+        },
+        {
+          "start": 1851.7,
+          "end": 1855.37,
+          "text": "That's basically it and like I said before you can have this deployed as well."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1855.63,
+      "members": [
+        {
+          "start": 1855.63,
+          "end": 1858.16,
+          "text": "This is running locally, so it's pretty easy to handle."
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 1890.61,
+      "members": [
+        {
+          "start": 1879.66,
+          "end": 1881.5,
+          "text": "Pretty fast inside of Versol."
+        },
+        {
+          "start": 1890.61,
+          "end": 1892.81,
+          "text": "-- pretty fast inside of Vercel, for example."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1883.29,
+      "members": [
+        {
+          "start": 1883.29,
+          "end": 1886,
+          "text": "But honestly, you could deploy this pretty fast instead of Vercel."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1887.04,
+      "members": [
+        {
+          "start": 1887.04,
+          "end": 1887.68,
+          "text": "Foiling."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1894.45,
+      "members": [
+        {
+          "start": 1894.45,
+          "end": 1896.02,
+          "text": "That could always be triggered."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1902.55,
+      "members": [
+        {
+          "start": 1902.55,
+          "end": 1905.5,
+          "text": "Is then published and publicly available for everyone."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1911.1,
+      "members": [
+        {
+          "start": 1911.1,
+          "end": 1914.92,
+          "text": "If you'd like a more in-depth tutorial on that, please let me know down in the comments section."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1915.87,
+      "members": [
+        {
+          "start": 1915.87,
+          "end": 1916.48,
+          "text": "Thanks for watching."
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "kept_start": 1926.52,
+      "members": [
+        {
+          "start": 1924.57,
+          "end": 1925.75,
+          "text": "Let us know what you're doing."
+        },
+        {
+          "start": 1926.52,
+          "end": 1928.51,
+          "text": "Let us know what else you're doing with it."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1928.56,
+      "members": [
+        {
+          "start": 1928.56,
+          "end": 1929.44,
+          "text": "Fodrotine."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1929.97,
+      "members": [
+        {
+          "start": 1929.97,
+          "end": 1930.31,
+          "text": "What?"
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1932.1,
+      "members": [
+        {
+          "start": 1932.1,
+          "end": 1932.56,
+          "text": "It's claro."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1948.51,
+      "members": [
+        {
+          "start": 1948.51,
+          "end": 1948.94,
+          "text": "Arosa."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1956.97,
+      "members": [
+        {
+          "start": 1956.97,
+          "end": 1957.79,
+          "text": "Pretty awesome."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1961.47,
+      "members": [
+        {
+          "start": 1961.47,
+          "end": 1963.67,
+          "text": "Also let us know what else you're doing inside of cloud."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1973.86,
+      "members": [
+        {
+          "start": 1973.86,
+          "end": 1974.59,
+          "text": "A lot more."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1984.54,
+      "members": [
+        {
+          "start": 1984.54,
+          "end": 1985.66,
+          "text": "... hardcode routines."
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 1998.61,
+      "members": [
+        {
+          "start": 1998.61,
+          "end": 1999.79,
+          "text": "... Cloud Code routines. (smacks lips)"
+        }
+      ]
+    },
+    {
+      "size": 1,
+      "kept_start": 2030.44,
+      "members": [
+        {
+          "start": 2030.44,
+          "end": 2031.05,
+          "text": "Really awesome."
+        }
+      ]
+    },
+    {
+      "size": 6,
+      "kept_start": 2052.43,
+      "members": [
+        {
+          "start": 2035.78,
+          "end": 2036.57,
+          "text": "Thanks for watching."
+        },
+        {
+          "start": 2041.27,
+          "end": 2042.15,
+          "text": "Thanks for watching Leap."
+        },
+        {
+          "start": 2044.84,
+          "end": 2045.54,
+          "text": "Thanks for watching."
+        },
+        {
+          "start": 2047.72,
+          "end": 2049.17,
+          "text": "Thanks for watching. Make sure to leave a like."
+        },
+        {
+          "start": 2050.03,
+          "end": 2052.14,
+          "text": "Thanks for watching, make sure to leave a like and I'll see you in the next video. Ciao."
+        },
+        {
+          "start": 2052.43,
+          "end": 2055.23,
+          "text": "Thanks for watching. Make sure to leave a like and we'll see you in the next video."
+        }
+      ]
+    }
+  ],
+  "dropped": [
+    {
+      "start": 1.66,
+      "end": 2.27,
+      "text": "(clears throat)"
+    },
+    {
+      "start": 4.69,
+      "end": 8.9,
+      "text": "Hey, there's Leo from Firecall, and in this video we'll be taking a look at the new routines from-"
+    },
+    {
+      "start": 9.49,
+      "end": 13.34,
+      "text": "Hey, this is Leo from PowerCall and in this video we'll be taking a look at the new routines from-"
+    },
+    {
+      "start": 20.02,
+      "end": 23.9,
+      "text": "Hey there, it's Leo from ProductHaul and in this video we'll be taking a look at the new routines inside of-"
+    },
+    {
+      "start": 29.65,
+      "end": 34.04,
+      "text": "And create the most obvious workflow which is a way for you to use FireCrawl-"
+    },
+    {
+      "start": 57.25,
+      "end": 58.58,
+      "text": "To produce a nearly-"
+    },
+    {
+      "start": 58.96,
+      "end": 60.83,
+      "text": "To produce a nearly infinite amount-"
+    },
+    {
+      "start": 61.09,
+      "end": 64.55,
+      "text": "--to produce a nearly infinite amount of blog posts, be it from p-"
+    },
+    {
+      "start": 64.9,
+      "end": 66.74,
+      "text": "To produce a nearly infinite amount-"
+    },
+    {
+      "start": 67.09,
+      "end": 68,
+      "text": "To produce an in-"
+    },
+    {
+      "start": 83.5,
+      "end": 84.5,
+      "text": "Now, just bear in mind-"
+    },
+    {
+      "start": 84.97,
+      "end": 86.27,
+      "text": "Now, just bear in mind that-"
+    },
+    {
+      "start": 86.89,
+      "end": 90.08,
+      "text": "Now just bear in mind that you don't want to be creating generic block-"
+    },
+    {
+      "start": 90.46,
+      "end": 94.01,
+      "text": "Now, just bear in mind that you don't want to be creating generic blog posts. So-"
+    },
+    {
+      "start": 94.21,
+      "end": 95.63,
+      "text": "One way that you can-"
+    },
+    {
+      "start": 101.56,
+      "end": 102.68,
+      "text": "But first just bear in--"
+    },
+    {
+      "start": 102.88,
+      "end": 103.31,
+      "text": "But you-"
+    },
+    {
+      "start": 107.77,
+      "end": 110.45,
+      "text": "And for that, you'll want to first have a-"
+    },
+    {
+      "start": 111.82,
+      "end": 112.91,
+      "text": "But first, have in mind that-"
+    },
+    {
+      "start": 113.05,
+      "end": 115.85,
+      "text": "First, have in mind that you don't want to be creating a generic blog p-"
+    },
+    {
+      "start": 117.64,
+      "end": 117.98,
+      "text": "(rock music)"
+    },
+    {
+      "start": 118.24,
+      "end": 121.31,
+      "text": "First, have in mind that you don't want to be creating generic-"
+    },
+    {
+      "start": 125.32,
+      "end": 127.61,
+      "text": "In case you're using AI for this-"
+    },
+    {
+      "start": 129.43,
+      "end": 130.07,
+      "text": "Now, Burn One-"
+    },
+    {
+      "start": 145.36,
+      "end": 146.03,
+      "text": "For example-"
+    },
+    {
+      "start": 146.38,
+      "end": 147.47,
+      "text": "For example, if I wanted-"
+    },
+    {
+      "start": 148.3,
+      "end": 150.68,
+      "text": "For example, if I wanted to write a blog post about-"
+    },
+    {
+      "start": 151,
+      "end": 152.72,
+      "text": "For example, if I wanted to write a blog post-"
+    },
+    {
+      "start": 153.04,
+      "end": 155.51,
+      "text": "For example, if I wanted to write a blog post around-"
+    },
+    {
+      "start": 156.19,
+      "end": 159.11,
+      "text": "For example, if I wanted to write a blog post around this new-"
+    },
+    {
+      "start": 159.73,
+      "end": 161.18,
+      "text": "For example, if I wanted to write-"
+    },
+    {
+      "start": 161.59,
+      "end": 163.58,
+      "text": "For example, if I want it to write a-"
+    },
+    {
+      "start": 164.29,
+      "end": 165.68,
+      "text": "For example, if I wanted to write..."
+    },
+    {
+      "start": 166.69,
+      "end": 168.41,
+      "text": "For example, if I wanted to write a-"
+    },
+    {
+      "start": 175.21,
+      "end": 177.53,
+      "text": "For example, if I wanted it to write about-"
+    },
+    {
+      "start": 178.24,
+      "end": 182.27,
+      "text": "For example, if I wanted it to write about new routines inside of Cloud Code-"
+    },
+    {
+      "start": 182.47,
+      "end": 184.55,
+      "text": "This is already not so generic since-"
+    },
+    {
+      "start": 186.43,
+      "end": 186.86,
+      "text": "And-"
+    },
+    {
+      "start": 197.71,
+      "end": 199.91,
+      "text": "It would fetch inside of its own training..."
+    },
+    {
+      "start": 200.08,
+      "end": 201.11,
+      "text": "What it had-"
+    },
+    {
+      "start": 211.57,
+      "end": 214.52,
+      "text": "Which could be something really outdated that-"
+    },
+    {
+      "start": 216.58,
+      "end": 219.17,
+      "text": "Probably it would look inside of its own training to see-"
+    },
+    {
+      "start": 219.49,
+      "end": 220.61,
+      "text": "Probably it would look..."
+    },
+    {
+      "start": 226.36,
+      "end": 227.24,
+      "text": "From over 15-"
+    },
+    {
+      "start": 235.3,
+      "end": 238.22,
+      "text": "Probably, it would look inside of its own training to find something-"
+    },
+    {
+      "start": 238.78,
+      "end": 242.42,
+      "text": "Probably it would look inside of its own training to see something..."
+    },
+    {
+      "start": 243.37,
+      "end": 244.79,
+      "text": "Probably I would look inside of--"
+    },
+    {
+      "start": 245.8,
+      "end": 249.41,
+      "text": "Probably it would look inside of its own training to find something that-"
+    },
+    {
+      "start": 249.73,
+      "end": 250.07,
+      "text": "Is-"
+    },
+    {
+      "start": 250.18,
+      "end": 250.4,
+      "text": ""
+    },
+    {
+      "start": 252.01,
+      "end": 256.37,
+      "text": "Probably it would look inside of its own training to find something really outdated, like-"
+    },
+    {
+      "start": 257.74,
+      "end": 258.08,
+      "text": "Which-"
+    },
+    {
+      "start": 262.09,
+      "end": 262.46,
+      "text": "A s-"
+    },
+    {
+      "start": 267.64,
+      "end": 268.07,
+      "text": "So..."
+    },
+    {
+      "start": 271.03,
+      "end": 273.8,
+      "text": "But if you add FireCrawl to the equation-"
+    },
+    {
+      "start": 274.63,
+      "end": 276.26,
+      "text": "But if you add FireCrawl-"
+    },
+    {
+      "start": 276.82,
+      "end": 277.07,
+      "text": ""
+    },
+    {
+      "start": 279.1,
+      "end": 280.28,
+      "text": "But if you tell it, hey-"
+    },
+    {
+      "start": 284.83,
+      "end": 288.8,
+      "text": "But if you tell it something like I want recent news and use Firecall to fetch those news-"
+    },
+    {
+      "start": 289.06,
+      "end": 289.85,
+      "text": "Then now-"
+    },
+    {
+      "start": 291.97,
+      "end": 292.76,
+      "text": "But if you get it-"
+    },
+    {
+      "start": 292.87,
+      "end": 294.23,
+      "text": "But if you give it a se-"
+    },
+    {
+      "start": 295.96,
+      "end": 299.6,
+      "text": "But if you give it a set of skills along with tools to fetch for those data-"
+    },
+    {
+      "start": 299.95,
+      "end": 300.65,
+      "text": "But if you get a-"
+    },
+    {
+      "start": 300.91,
+      "end": 302.09,
+      "text": "But if you give it a sort of s-"
+    },
+    {
+      "start": 302.35,
+      "end": 305.27,
+      "text": "But if you give it a set of skills along with a tool that helps it-"
+    },
+    {
+      "start": 308.86,
+      "end": 309.71,
+      "text": "Then it should be-"
+    },
+    {
+      "start": 327.85,
+      "end": 328.16,
+      "text": ""
+    },
+    {
+      "start": 347.8,
+      "end": 350.21,
+      "text": "Earlier today, I created this personal blog. It's..."
+    },
+    {
+      "start": 350.44,
+      "end": 351.53,
+      "text": "Earlier today, I created the-"
+    },
+    {
+      "start": 352.03,
+      "end": 354.5,
+      "text": "Earlier today, I created this personal blog. Now-"
+    },
+    {
+      "start": 354.61,
+      "end": 354.83,
+      "text": ""
+    },
+    {
+      "start": 355.63,
+      "end": 359.03,
+      "text": "Earlier today, I created this personal blog. It's something everyone-"
+    },
+    {
+      "start": 361.42,
+      "end": 364.37,
+      "text": "And I did so with this simple prompt, which-"
+    },
+    {
+      "start": 364.57,
+      "end": 365.9,
+      "text": "specifies that I want it-"
+    },
+    {
+      "start": 369.58,
+      "end": 370.79,
+      "text": "I describe a-"
+    },
+    {
+      "start": 371.17,
+      "end": 371.84,
+      "text": "I just-"
+    },
+    {
+      "start": 393.64,
+      "end": 394.46,
+      "text": "Finally, I-"
+    },
+    {
+      "start": 395.71,
+      "end": 397.1,
+      "text": "Finally, I have it create a-"
+    },
+    {
+      "start": 397.63,
+      "end": 398.6,
+      "text": "Finally, I have it-"
+    },
+    {
+      "start": 399.31,
+      "end": 400.52,
+      "text": "Finally, I added that-"
+    },
+    {
+      "start": 400.87,
+      "end": 401.99,
+      "text": "Finally, I added-"
+    },
+    {
+      "start": 402.82,
+      "end": 404,
+      "text": "Finally, I added an-"
+    },
+    {
+      "start": 408.28,
+      "end": 411.32,
+      "text": "The other one for creating the blog post and the final one-"
+    },
+    {
+      "start": 411.55,
+      "end": 411.83,
+      "text": ""
+    },
+    {
+      "start": 417.28,
+      "end": 417.5,
+      "text": ""
+    },
+    {
+      "start": 418.99,
+      "end": 419.51,
+      "text": "It didn't--"
+    },
+    {
+      "start": 420.04,
+      "end": 421.64,
+      "text": "It then proceeded to create-"
+    },
+    {
+      "start": 428.08,
+      "end": 432.98,
+      "text": "It then proceeded to create the website, which is exactly this one. You can basically..."
+    },
+    {
+      "start": 434.23,
+      "end": 434.54,
+      "text": ""
+    },
+    {
+      "start": 437.47,
+      "end": 438.02,
+      "text": "Which--"
+    },
+    {
+      "start": 439.72,
+      "end": 441.05,
+      "text": "Uh, you can s-"
+    },
+    {
+      "start": 454.81,
+      "end": 460.7,
+      "text": "In the homepage, you just get a list of all the articles produced when you go inside of that article-"
+    },
+    {
+      "start": 460.87,
+      "end": 462.08,
+      "text": "You can actually see-"
+    },
+    {
+      "start": 475.42,
+      "end": 475.88,
+      "text": "(clears throat)"
+    },
+    {
+      "start": 479.47,
+      "end": 479.78,
+      "text": ""
+    },
+    {
+      "start": 480.67,
+      "end": 483.08,
+      "text": "You get a nice structure of text, all with-"
+    },
+    {
+      "start": 484.06,
+      "end": 485.87,
+      "text": "You get a nice structure of text with-"
+    },
+    {
+      "start": 489.22,
+      "end": 491.33,
+      "text": "You get a nice structure of text with a-"
+    },
+    {
+      "start": 495.79,
+      "end": 496.04,
+      "text": ""
+    },
+    {
+      "start": 507.7,
+      "end": 508.76,
+      "text": "Now, of course, in the first-"
+    },
+    {
+      "start": 509.35,
+      "end": 511.28,
+      "text": "Now, on the first run, you might not get-"
+    },
+    {
+      "start": 511.66,
+      "end": 513.65,
+      "text": "Now, on the first try you might not get the perfect-"
+    },
+    {
+      "start": 514.9,
+      "end": 516.11,
+      "text": "So, some-"
+    },
+    {
+      "start": 517.18,
+      "end": 517.76,
+      "text": "Now, on the s-st-"
+    },
+    {
+      "start": 526.18,
+      "end": 526.94,
+      "text": "As well as the-"
+    },
+    {
+      "start": 540.31,
+      "end": 541.49,
+      "text": "Then I had it installed-"
+    },
+    {
+      "start": 549.55,
+      "end": 549.77,
+      "text": ""
+    },
+    {
+      "start": 555.76,
+      "end": 560.36,
+      "text": "Then down here I added install FireCrawl skills, which are basically..."
+    },
+    {
+      "start": 560.44,
+      "end": 560.72,
+      "text": ""
+    },
+    {
+      "start": 566.98,
+      "end": 569.18,
+      "text": "Then down here I had it installed the FireCrawl-"
+    },
+    {
+      "start": 573.04,
+      "end": 574.43,
+      "text": "Then down here I had it in st-"
+    },
+    {
+      "start": 576.52,
+      "end": 577.16,
+      "text": "Then down h-"
+    },
+    {
+      "start": 581.38,
+      "end": 584.57,
+      "text": "One for the CLI crawl, download, interact map-"
+    },
+    {
+      "start": 586,
+      "end": 591.74,
+      "text": "Then down here, I had it add all of the firecrawl skills from the CLI so FireCrawlAgent, FireCrawl--"
+    },
+    {
+      "start": 600.22,
+      "end": 602.24,
+      "text": "All of the most important skills that-"
+    },
+    {
+      "start": 620.83,
+      "end": 621.47,
+      "text": "Eventually, I'll-"
+    },
+    {
+      "start": 621.97,
+      "end": 624.14,
+      "text": "Eventually, all of these Claude skills were added-"
+    },
+    {
+      "start": 629.68,
+      "end": 631.19,
+      "text": "Eventually, all of these cloud kills will-"
+    },
+    {
+      "start": 631.87,
+      "end": 635.21,
+      "text": "Eventually, all of these clawed skills were added. I made some pre-"
+    },
+    {
+      "start": 638.29,
+      "end": 639.35,
+      "text": "Eventually, all of this-"
+    },
+    {
+      "start": 642.25,
+      "end": 644.87,
+      "text": "Eventually, all of the skills were added. I made a brief--"
+    },
+    {
+      "start": 646.36,
+      "end": 648.62,
+      "text": "Eventually, all of the skills were added. I made a-"
+    },
+    {
+      "start": 648.67,
+      "end": 649.19,
+      "text": "Three-"
+    },
+    {
+      "start": 651.19,
+      "end": 653.51,
+      "text": "Eventually, all of the skills were added. I made a three--"
+    },
+    {
+      "start": 658.99,
+      "end": 660.35,
+      "text": "Eventually, all of the skills..."
+    },
+    {
+      "start": 663.13,
+      "end": 665.24,
+      "text": "Eventually, all of the skills were added and-"
+    },
+    {
+      "start": 671.14,
+      "end": 671.36,
+      "text": ""
+    },
+    {
+      "start": 673.42,
+      "end": 673.64,
+      "text": ""
+    },
+    {
+      "start": 683.98,
+      "end": 684.29,
+      "text": ""
+    },
+    {
+      "start": 684.4,
+      "end": 684.8,
+      "text": "(rock music)"
+    },
+    {
+      "start": 686.83,
+      "end": 687.65,
+      "text": "Now, before we-"
+    },
+    {
+      "start": 687.88,
+      "end": 690.23,
+      "text": "Now, before I move on with the routines and it's-"
+    },
+    {
+      "start": 690.58,
+      "end": 692.24,
+      "text": "Now, before I move on with the routi-"
+    },
+    {
+      "start": 692.59,
+      "end": 695.9,
+      "text": "Now before I move on with the routines and it’s pretty important for me to explain-"
+    },
+    {
+      "start": 696.34,
+      "end": 698.03,
+      "text": "Now, before I move on with the routines for-"
+    },
+    {
+      "start": 698.38,
+      "end": 701.54,
+      "text": "Now, before I move on with the actual routines from Cloud Code-"
+    },
+    {
+      "start": 701.95,
+      "end": 702.83,
+      "text": "Now, before I move o-"
+    },
+    {
+      "start": 703.09,
+      "end": 705.26,
+      "text": "Now before I move forward with the actual routines..."
+    },
+    {
+      "start": 705.61,
+      "end": 708.71,
+      "text": "Now, before I move forward with the actual routines from Cloud Code,-"
+    },
+    {
+      "start": 712.15,
+      "end": 715.07,
+      "text": "Now, before I move forward with the actual routines from Cloud Code-"
+    },
+    {
+      "start": 715.45,
+      "end": 716.42,
+      "text": "What I'm doing--"
+    },
+    {
+      "start": 720.76,
+      "end": 721.22,
+      "text": "Now the-"
+    },
+    {
+      "start": 721.39,
+      "end": 724.31,
+      "text": "Now, before I move forward with the actual routines from Cloud Code-"
+    },
+    {
+      "start": 724.57,
+      "end": 724.97,
+      "text": "I-"
+    },
+    {
+      "start": 729.13,
+      "end": 730.85,
+      "text": "Now, before I move forward with the actual-"
+    },
+    {
+      "start": 731.29,
+      "end": 732.68,
+      "text": "Now, before I move forward with the-"
+    },
+    {
+      "start": 734.08,
+      "end": 736.37,
+      "text": "Now, I know I'm taking a bit long to get to the routines-"
+    },
+    {
+      "start": 740.44,
+      "end": 741.23,
+      "text": "Now, I know I'm taking-"
+    },
+    {
+      "start": 741.7,
+      "end": 745.7,
+      "text": "Now, I know I'm taking a bit long to get to the actual routines from Cloud Code-"
+    },
+    {
+      "start": 746.02,
+      "end": 746.99,
+      "text": "But this is..."
+    },
+    {
+      "start": 747.85,
+      "end": 748.31,
+      "text": "(laughs)"
+    },
+    {
+      "start": 748.63,
+      "end": 749.18,
+      "text": "I know-"
+    },
+    {
+      "start": 749.62,
+      "end": 751.22,
+      "text": "I know I'm taking a bit longer to..."
+    },
+    {
+      "start": 755.02,
+      "end": 759.26,
+      "text": "But I feel like it's really important to go through this process of understanding your actual-"
+    },
+    {
+      "start": 772.93,
+      "end": 773.18,
+      "text": ""
+    },
+    {
+      "start": 775.99,
+      "end": 776.39,
+      "text": "To ac--"
+    },
+    {
+      "start": 777.46,
+      "end": 779.12,
+      "text": "And actually understand how your project is-"
+    },
+    {
+      "start": 781.78,
+      "end": 782.54,
+      "text": "An accurate-"
+    },
+    {
+      "start": 782.89,
+      "end": 784.79,
+      "text": "And actually understand how your project-"
+    },
+    {
+      "start": 787.51,
+      "end": 789.5,
+      "text": "Before having something that will be, uh--"
+    },
+    {
+      "start": 789.85,
+      "end": 790.13,
+      "text": ""
+    },
+    {
+      "start": 790.66,
+      "end": 792.29,
+      "text": "And actually understand how your prog-"
+    },
+    {
+      "start": 792.58,
+      "end": 795.5,
+      "text": "And actually understand how your project works before having a-"
+    },
+    {
+      "start": 796.12,
+      "end": 799.85,
+      "text": "And actually understand how your project works and what will be executed by-"
+    },
+    {
+      "start": 800.02,
+      "end": 801.59,
+      "text": "A routine task since the-"
+    },
+    {
+      "start": 822.97,
+      "end": 823.49,
+      "text": "It's your-"
+    },
+    {
+      "start": 824.2,
+      "end": 827.03,
+      "text": "If you're having something run while you're not active on-"
+    },
+    {
+      "start": 827.2,
+      "end": 830.24,
+      "text": "If you're having something run while you're not really active on your compu-"
+    },
+    {
+      "start": 830.53,
+      "end": 833.96,
+      "text": "If you're having something run on your computer without really being active there, um..."
+    },
+    {
+      "start": 834.37,
+      "end": 835.01,
+      "text": "If you're having s-"
+    },
+    {
+      "start": 835.27,
+      "end": 836.39,
+      "text": "You really need to think a-"
+    },
+    {
+      "start": 836.59,
+      "end": 837.41,
+      "text": "you really need to-"
+    },
+    {
+      "start": 847.81,
+      "end": 848.03,
+      "text": ""
+    },
+    {
+      "start": 852.16,
+      "end": 852.65,
+      "text": "From wha-"
+    },
+    {
+      "start": 852.97,
+      "end": 854.12,
+      "text": "From those prompts, what-"
+    },
+    {
+      "start": 854.44,
+      "end": 854.99,
+      "text": "From those-"
+    },
+    {
+      "start": 856.6,
+      "end": 858.11,
+      "text": "Inside of our projects, from those-"
+    },
+    {
+      "start": 862.3,
+      "end": 864.56,
+      "text": "From those prompts, the project created was—"
+    },
+    {
+      "start": 865.09,
+      "end": 868.16,
+      "text": "From those prompts, the project created was this one. These skills-"
+    },
+    {
+      "start": 869.02,
+      "end": 869.48,
+      "text": "From that-"
+    },
+    {
+      "start": 872.38,
+      "end": 874.58,
+      "text": "These skills were a simple-"
+    },
+    {
+      "start": 896.11,
+      "end": 897.17,
+      "text": "That specifies-"
+    },
+    {
+      "start": 899.5,
+      "end": 901.43,
+      "text": "--that specifies everything I need to-"
+    },
+    {
+      "start": 901.99,
+      "end": 906.59,
+      "text": "That specifies everything I need to set a specific author voice as well-"
+    },
+    {
+      "start": 907.27,
+      "end": 909.23,
+      "text": "That specifies everything I need to, um--"
+    },
+    {
+      "start": 909.46,
+      "end": 911.42,
+      "text": "That specifies everything I need. So-"
+    },
+    {
+      "start": 923.2,
+      "end": 925.07,
+      "text": "So that we're not just having fire call-"
+    },
+    {
+      "start": 925.3,
+      "end": 926.09,
+      "text": "So that we're not-"
+    },
+    {
+      "start": 970.42,
+      "end": 971.18,
+      "text": "Now, another-"
+    },
+    {
+      "start": 972.85,
+      "end": 973.67,
+      "text": "Now, another way-"
+    },
+    {
+      "start": 974.23,
+      "end": 975.35,
+      "text": "Now another detail-"
+    },
+    {
+      "start": 979.69,
+      "end": 982.22,
+      "text": "They're not added to a database or any cert-"
+    },
+    {
+      "start": 983.14,
+      "end": 984.29,
+      "text": "Now, another interesting thing-"
+    },
+    {
+      "start": 984.46,
+      "end": 985.64,
+      "text": "Another interesting thing that gets-"
+    },
+    {
+      "start": 985.87,
+      "end": 987.62,
+      "text": "Another interesting thing about this project is that-"
+    },
+    {
+      "start": 987.67,
+      "end": 988.64,
+      "text": "Is the way these..."
+    },
+    {
+      "start": 989.11,
+      "end": 991.88,
+      "text": "Another interesting thing about this project is how these-"
+    },
+    {
+      "start": 992.74,
+      "end": 995.21,
+      "text": "Another interesting thing about this project is how these-"
+    },
+    {
+      "start": 1022.23,
+      "end": 1022.45,
+      "text": ""
+    },
+    {
+      "start": 1027.42,
+      "end": 1027.82,
+      "text": "Which-"
+    },
+    {
+      "start": 1031.41,
+      "end": 1032.29,
+      "text": "Which contains-"
+    },
+    {
+      "start": 1035.46,
+      "end": 1038.86,
+      "text": "Which contains a metadata that allows me to structure-"
+    },
+    {
+      "start": 1040.35,
+      "end": 1040.99,
+      "text": "Which can take-"
+    },
+    {
+      "start": 1041.22,
+      "end": 1043.15,
+      "text": "Which contains a metadata that allow--"
+    },
+    {
+      "start": 1048.45,
+      "end": 1048.94,
+      "text": "What can ch-"
+    },
+    {
+      "start": 1049.71,
+      "end": 1051.13,
+      "text": "Which contains a metadata-"
+    },
+    {
+      "start": 1052.29,
+      "end": 1055.75,
+      "text": "Which contains a metadata that allows me to structure-"
+    },
+    {
+      "start": 1063.06,
+      "end": 1063.31,
+      "text": ""
+    },
+    {
+      "start": 1074.91,
+      "end": 1078.64,
+      "text": "So for example the tags cloud code agent coding and automation-"
+    },
+    {
+      "start": 1084.09,
+      "end": 1085.84,
+      "text": "Are all set here as-"
+    },
+    {
+      "start": 1086.19,
+      "end": 1087.61,
+      "text": "Are all set here as-"
+    },
+    {
+      "start": 1099.87,
+      "end": 1100.15,
+      "text": ""
+    },
+    {
+      "start": 1100.47,
+      "end": 1101.44,
+      "text": "And just to make sure, I-"
+    },
+    {
+      "start": 1101.88,
+      "end": 1103.27,
+      "text": "And just to make sure that when-"
+    },
+    {
+      "start": 1103.53,
+      "end": 1105.97,
+      "text": "And just to make sure that whenever these articles are created-"
+    },
+    {
+      "start": 1106.23,
+      "end": 1109.21,
+      "text": "They aren't instantly posted and goes through my review, but-"
+    },
+    {
+      "start": 1109.8,
+      "end": 1110.8,
+      "text": "And just to make sure that w-"
+    },
+    {
+      "start": 1111.03,
+      "end": 1113.89,
+      "text": "And just to make sure that when these articles are generated, they aren't..."
+    },
+    {
+      "start": 1115.44,
+      "end": 1115.99,
+      "text": "(music)"
+    },
+    {
+      "start": 1116.91,
+      "end": 1118.06,
+      "text": "And just to make sure that these po-"
+    },
+    {
+      "start": 1118.26,
+      "end": 1119.26,
+      "text": "And just to make sure that-"
+    },
+    {
+      "start": 1119.52,
+      "end": 1119.95,
+      "text": "And just-"
+    },
+    {
+      "start": 1120.33,
+      "end": 1123.55,
+      "text": "And additionally, to make sure that these blog posts aren't directly posted-"
+    },
+    {
+      "start": 1123.81,
+      "end": 1125.35,
+      "text": "I have a draft-"
+    },
+    {
+      "start": 1126.36,
+      "end": 1129.46,
+      "text": "Where I can toggle true, and if it is true-"
+    },
+    {
+      "start": 1132.21,
+      "end": 1134.53,
+      "text": "When set to false, it means it's published-"
+    },
+    {
+      "start": 1137.49,
+      "end": 1137.83,
+      "text": "That-"
+    },
+    {
+      "start": 1148.44,
+      "end": 1151.42,
+      "text": "Now, all this is very well documented inside of the Create Your-"
+    },
+    {
+      "start": 1153.36,
+      "end": 1155.17,
+      "text": "Now, all this is very well documented in-"
+    },
+    {
+      "start": 1155.49,
+      "end": 1156.37,
+      "text": "Now, all this is-"
+    },
+    {
+      "start": 1158.85,
+      "end": 1159.94,
+      "text": "...inside of the create-"
+    },
+    {
+      "start": 1171.15,
+      "end": 1173.41,
+      "text": "With all that in mind, now we finally--"
+    },
+    {
+      "start": 1173.73,
+      "end": 1174.49,
+      "text": "With all that in-"
+    },
+    {
+      "start": 1177.63,
+      "end": 1178.39,
+      "text": "Inside of the..."
+    },
+    {
+      "start": 1178.65,
+      "end": 1179.2,
+      "text": "With all-"
+    },
+    {
+      "start": 1179.34,
+      "end": 1179.89,
+      "text": "Without-"
+    },
+    {
+      "start": 1180,
+      "end": 1181.24,
+      "text": "With all that documented-"
+    },
+    {
+      "start": 1187.68,
+      "end": 1190.12,
+      "text": "All right, now with all that really well documented-"
+    },
+    {
+      "start": 1192.45,
+      "end": 1193.6,
+      "text": "...inside of this routine-"
+    },
+    {
+      "start": 1193.89,
+      "end": 1195.34,
+      "text": "All I need to add is-"
+    },
+    {
+      "start": 1195.57,
+      "end": 1196,
+      "text": "Some-"
+    },
+    {
+      "start": 1197.34,
+      "end": 1198.43,
+      "text": "Inside of this routine, we-"
+    },
+    {
+      "start": 1198.48,
+      "end": 1200.32,
+      "text": "Inside of this routine, all I want to add--"
+    },
+    {
+      "start": 1200.82,
+      "end": 1203.17,
+      "text": "Inside of this routine, all I'll need to add now-"
+    },
+    {
+      "start": 1203.91,
+      "end": 1204.61,
+      "text": "Inside of this-"
+    },
+    {
+      "start": 1204.87,
+      "end": 1206.92,
+      "text": "Now, inside of this routine, all I want to actually-"
+    },
+    {
+      "start": 1207.63,
+      "end": 1210.76,
+      "text": "Now, inside of this routine all I'll want to add is-"
+    },
+    {
+      "start": 1217.41,
+      "end": 1221.53,
+      "text": "You should use the skills for my voice along with the skills for generating an article..."
+    },
+    {
+      "start": 1229.14,
+      "end": 1232.3,
+      "text": "If from your research using FirePro from the past 24 hours-"
+    },
+    {
+      "start": 1234.87,
+      "end": 1235.6,
+      "text": "Also, a..."
+    },
+    {
+      "start": 1237.66,
+      "end": 1238.6,
+      "text": "please maintain a-"
+    },
+    {
+      "start": 1239.34,
+      "end": 1241.9,
+      "text": "Please maintain as a draft and when done writing-"
+    },
+    {
+      "start": 1243.15,
+      "end": 1244.45,
+      "text": "Then you're done with, uh-"
+    },
+    {
+      "start": 1244.92,
+      "end": 1245.71,
+      "text": "Please maintain at-"
+    },
+    {
+      "start": 1246.12,
+      "end": 1248.59,
+      "text": "Please maintain as a draft and when done writing as the..."
+    },
+    {
+      "start": 1249.81,
+      "end": 1252.79,
+      "text": "Please maintain as the draft and when done writing the MDX, please-"
+    },
+    {
+      "start": 1253.05,
+      "end": 1253.48,
+      "text": "You're-"
+    },
+    {
+      "start": 1263.52,
+      "end": 1265.09,
+      "text": "I specify where my projects-"
+    },
+    {
+      "start": 1280.26,
+      "end": 1281.29,
+      "text": "But if you want this to be-"
+    },
+    {
+      "start": 1281.4,
+      "end": 1282.1,
+      "text": "Avoid already-"
+    },
+    {
+      "start": 1282.24,
+      "end": 1283.75,
+      "text": "You'll probably have this-"
+    },
+    {
+      "start": 1300.96,
+      "end": 1302.35,
+      "text": "And either have GitHub Action-"
+    },
+    {
+      "start": 1302.55,
+      "end": 1305.02,
+      "text": "And either have GitHub Actions to trigger..."
+    },
+    {
+      "start": 1316.11,
+      "end": 1316.87,
+      "text": "This way the-"
+    },
+    {
+      "start": 1316.92,
+      "end": 1317.98,
+      "text": "This way, the blog you-"
+    },
+    {
+      "start": 1318.18,
+      "end": 1319.9,
+      "text": "This way, the blog you generated can-"
+    },
+    {
+      "start": 1322.05,
+      "end": 1323.5,
+      "text": "This way, you can have a complete-"
+    },
+    {
+      "start": 1324.06,
+      "end": 1326.17,
+      "text": "This way you can just have a automatically-"
+    },
+    {
+      "start": 1326.58,
+      "end": 1327.16,
+      "text": "This way you can-"
+    },
+    {
+      "start": 1327.78,
+      "end": 1328.93,
+      "text": "Th-this way you can have-"
+    },
+    {
+      "start": 1329.79,
+      "end": 1331.03,
+      "text": "This way you can actually d-"
+    },
+    {
+      "start": 1331.26,
+      "end": 1332.44,
+      "text": "This way you can already have-"
+    },
+    {
+      "start": 1332.76,
+      "end": 1334.15,
+      "text": "This way you can already have-"
+    },
+    {
+      "start": 1334.59,
+      "end": 1336.73,
+      "text": "This way, you can already have the article..."
+    },
+    {
+      "start": 1351.78,
+      "end": 1352.15,
+      "text": "With-"
+    },
+    {
+      "start": 1352.62,
+      "end": 1353.35,
+      "text": "So I set this-"
+    },
+    {
+      "start": 1359.82,
+      "end": 1361.15,
+      "text": "And every time it runs-"
+    },
+    {
+      "start": 1361.23,
+      "end": 1361.54,
+      "text": ""
+    },
+    {
+      "start": 1361.59,
+      "end": 1363.16,
+      "text": "It's basically going to send off-"
+    },
+    {
+      "start": 1363.45,
+      "end": 1364.27,
+      "text": "A prompt-"
+    },
+    {
+      "start": 1364.5,
+      "end": 1366.22,
+      "text": "Inside of that repository-"
+    },
+    {
+      "start": 1398.73,
+      "end": 1399.37,
+      "text": "So let's head-"
+    },
+    {
+      "start": 1399.51,
+      "end": 1403.06,
+      "text": "So let's hit run now to see how this works. As soon as I..."
+    },
+    {
+      "start": 1404.55,
+      "end": 1404.98,
+      "text": "So I j-"
+    },
+    {
+      "start": 1407.22,
+      "end": 1408.4,
+      "text": "It basically sends off-"
+    },
+    {
+      "start": 1408.66,
+      "end": 1411.22,
+      "text": "It basically sends off that prompt as if you were-"
+    },
+    {
+      "start": 1441.09,
+      "end": 1442.24,
+      "text": "Understood at NEETs heat-"
+    },
+    {
+      "start": 1456.33,
+      "end": 1459.19,
+      "text": "As you can see right here, the CLI is used to-"
+    },
+    {
+      "start": 1461.82,
+      "end": 1462.64,
+      "text": "As you can see-"
+    },
+    {
+      "start": 1468.33,
+      "end": 1471.1,
+      "text": "Just because it's able to add all of these specific-"
+    },
+    {
+      "start": 1471.3,
+      "end": 1472.45,
+      "text": "--flags that helps it-"
+    },
+    {
+      "start": 1482.46,
+      "end": 1482.77,
+      "text": ""
+    },
+    {
+      "start": 1485.88,
+      "end": 1487.54,
+      "text": "It's also doing some research on-"
+    },
+    {
+      "start": 1489.93,
+      "end": 1492.76,
+      "text": "It's also doing some research on Codex CLI, Gemini C, and-"
+    },
+    {
+      "start": 1493.05,
+      "end": 1494.17,
+      "text": "It's also doing some s-"
+    },
+    {
+      "start": 1494.46,
+      "end": 1496.93,
+      "text": "It's also doing some research on Codex Gemini-"
+    },
+    {
+      "start": 1505.32,
+      "end": 1506.29,
+      "text": "All this is saved-"
+    },
+    {
+      "start": 1506.4,
+      "end": 1509.35,
+      "text": "All this is saved to the file system and then read-"
+    },
+    {
+      "start": 1509.85,
+      "end": 1512.35,
+      "text": "All this is saved to the file system and then-"
+    },
+    {
+      "start": 1515.91,
+      "end": 1518.8,
+      "text": "All this is then saved to the file system and-"
+    },
+    {
+      "start": 1523.47,
+      "end": 1524.26,
+      "text": "Oh, this is that-"
+    },
+    {
+      "start": 1528.6,
+      "end": 1528.85,
+      "text": ""
+    },
+    {
+      "start": 1532.05,
+      "end": 1533.2,
+      "text": "All this is now saved-"
+    },
+    {
+      "start": 1533.97,
+      "end": 1536.56,
+      "text": "All this is now saved to the file system and once it-"
+    },
+    {
+      "start": 1537.09,
+      "end": 1538.12,
+      "text": "All this is then fa— e-"
+    },
+    {
+      "start": 1538.95,
+      "end": 1542.71,
+      "text": "All this is now saved to the file system and once it has all the context-"
+    },
+    {
+      "start": 1580.11,
+      "end": 1581.47,
+      "text": "And again, this is running on-"
+    },
+    {
+      "start": 1581.67,
+      "end": 1583.78,
+      "text": "And again, this is running on my computer. If-"
+    },
+    {
+      "start": 1586.59,
+      "end": 1587.92,
+      "text": "And again, this is running on my--"
+    },
+    {
+      "start": 1588.27,
+      "end": 1590.56,
+      "text": "And again, this is running on my computer. If you'd-"
+    },
+    {
+      "start": 1591.18,
+      "end": 1591.85,
+      "text": "And again, this-"
+    },
+    {
+      "start": 1592.17,
+      "end": 1595.03,
+      "text": "And again, this is running on my computer. If you'd like it to run-"
+    },
+    {
+      "start": 1595.59,
+      "end": 1598.9,
+      "text": "And again this is running all on my computer. You can also have it run-"
+    },
+    {
+      "start": 1607.23,
+      "end": 1613.18,
+      "text": "And again, this is all running locally, all inside of my computer. If you'd like it to run in the Anthropic server instead..."
+    },
+    {
+      "start": 1617.22,
+      "end": 1619.69,
+      "text": "You also have the option to have it run in--"
+    },
+    {
+      "start": 1619.92,
+      "end": 1621.28,
+      "text": "You also have the option to have it-"
+    },
+    {
+      "start": 1621.51,
+      "end": 1621.94,
+      "text": "You're off--"
+    },
+    {
+      "start": 1622.44,
+      "end": 1627.19,
+      "text": "You also have the options to have it run in Anthropic servers so that you don't even need to leave-"
+    },
+    {
+      "start": 1627.63,
+      "end": 1628.42,
+      "text": "Your Mac OS X-"
+    },
+    {
+      "start": 1631.56,
+      "end": 1632.56,
+      "text": "Your Mac turned o-"
+    },
+    {
+      "start": 1673.44,
+      "end": 1673.75,
+      "text": ""
+    },
+    {
+      "start": 1674.61,
+      "end": 1675.37,
+      "text": "All right, that-"
+    },
+    {
+      "start": 1675.63,
+      "end": 1676.6,
+      "text": "Um, okay. That's-"
+    },
+    {
+      "start": 1682.8,
+      "end": 1683.08,
+      "text": ""
+    },
+    {
+      "start": 1683.34,
+      "end": 1684.07,
+      "text": "You can actually-"
+    },
+    {
+      "start": 1690.6,
+      "end": 1693.19,
+      "text": "To have it open inside of Cloud Code desktop-"
+    },
+    {
+      "start": 1693.72,
+      "end": 1694.09,
+      "text": "But-"
+    },
+    {
+      "start": 1694.32,
+      "end": 1694.84,
+      "text": "I mean-"
+    },
+    {
+      "start": 1701.94,
+      "end": 1702.88,
+      "text": "And then you can either-"
+    },
+    {
+      "start": 1703.05,
+      "end": 1705.04,
+      "text": "And then after reading through it, if you-"
+    },
+    {
+      "start": 1705.21,
+      "end": 1707.32,
+      "text": "And then after reading through it, if you think it's-"
+    },
+    {
+      "start": 1707.73,
+      "end": 1710.32,
+      "text": "And then, after reading through it, if you think it's a nice blog to-"
+    },
+    {
+      "start": 1711.09,
+      "end": 1712.81,
+      "text": "And then after reading through it, if you f-"
+    },
+    {
+      "start": 1713.34,
+      "end": 1717.04,
+      "text": "And then after reading through it, if you want to change anything, you can ask a-"
+    },
+    {
+      "start": 1717.57,
+      "end": 1720.31,
+      "text": "And then after reading through it, you can either change it through--"
+    },
+    {
+      "start": 1722.28,
+      "end": 1723.76,
+      "text": "Or you can just have it-"
+    },
+    {
+      "start": 1725.07,
+      "end": 1726.85,
+      "text": "Then after reading through it, you can either--"
+    },
+    {
+      "start": 1727.17,
+      "end": 1729.64,
+      "text": "And then after reading through it, you can either apply to-"
+    },
+    {
+      "start": 1730.23,
+      "end": 1732.19,
+      "text": "And then after reading through it, you can either-"
+    },
+    {
+      "start": 1744.03,
+      "end": 1745.09,
+      "text": "Or you can just add it-"
+    },
+    {
+      "start": 1745.86,
+      "end": 1746.83,
+      "text": "Or you can just edit-"
+    },
+    {
+      "start": 1747.81,
+      "end": 1748.69,
+      "text": "Or you can just edit-"
+    },
+    {
+      "start": 1753.36,
+      "end": 1753.58,
+      "text": ""
+    },
+    {
+      "start": 1762.48,
+      "end": 1763.96,
+      "text": "As soon as you hit save-"
+    },
+    {
+      "start": 1766.5,
+      "end": 1767.65,
+      "text": "And see the blog-"
+    },
+    {
+      "start": 1787.17,
+      "end": 1787.48,
+      "text": ""
+    },
+    {
+      "start": 1795.72,
+      "end": 1796.21,
+      "text": "Actually-"
+    },
+    {
+      "start": 1796.29,
+      "end": 1797.08,
+      "text": "Actually, this one-"
+    },
+    {
+      "start": 1800.58,
+      "end": 1800.98,
+      "text": "This-"
+    },
+    {
+      "start": 1801.72,
+      "end": 1802.21,
+      "text": "Actually-"
+    },
+    {
+      "start": 1803.19,
+      "end": 1804.76,
+      "text": "Actually, this one was created be-"
+    },
+    {
+      "start": 1804.87,
+      "end": 1805.36,
+      "text": "(heavy metal music)"
+    },
+    {
+      "start": 1831.81,
+      "end": 1832.87,
+      "text": "So that's mainly it. Um..."
+    },
+    {
+      "start": 1833.7,
+      "end": 1834.19,
+      "text": "So that's-"
+    },
+    {
+      "start": 1835.23,
+      "end": 1837.07,
+      "text": "So that's basically it, like I said before. Um-"
+    },
+    {
+      "start": 1838.02,
+      "end": 1841.21,
+      "text": "So that's basically it, like I said before you can have this deployed in-"
+    },
+    {
+      "start": 1841.68,
+      "end": 1842.14,
+      "text": "So like I said-"
+    },
+    {
+      "start": 1844.89,
+      "end": 1847.63,
+      "text": "And that's basically it. Like I said before, this is..."
+    },
+    {
+      "start": 1848.19,
+      "end": 1850.99,
+      "text": "That's basically it, and like I said before this is-"
+    },
+    {
+      "start": 1860.7,
+      "end": 1861.4,
+      "text": "But honestly-"
+    },
+    {
+      "start": 1861.57,
+      "end": 1862.48,
+      "text": "But honestly, to dep-"
+    },
+    {
+      "start": 1862.74,
+      "end": 1864.25,
+      "text": "But honestly, to deploy this-"
+    },
+    {
+      "start": 1864.51,
+      "end": 1865.36,
+      "text": "But honestly, just-"
+    },
+    {
+      "start": 1865.77,
+      "end": 1867.01,
+      "text": "But honestly, to deploy this--"
+    },
+    {
+      "start": 1868.02,
+      "end": 1868.81,
+      "text": "But honestly, to do-"
+    },
+    {
+      "start": 1869.07,
+      "end": 1871.99,
+      "text": "But honestly, the additional step of deploying this will just..."
+    },
+    {
+      "start": 1872.34,
+      "end": 1873.1,
+      "text": "But honestly-"
+    },
+    {
+      "start": 1873.39,
+      "end": 1876.07,
+      "text": "But honestly, the additional step to deploy this, it could be-"
+    },
+    {
+      "start": 1876.39,
+      "end": 1877.69,
+      "text": "But honestly, you could deploy-"
+    },
+    {
+      "start": 1878.16,
+      "end": 1879.58,
+      "text": "But honestly, you could deploy this--"
+    },
+    {
+      "start": 1881.79,
+      "end": 1882.61,
+      "text": "And just have-"
+    },
+    {
+      "start": 1886.23,
+      "end": 1886.93,
+      "text": "Get the de-"
+    },
+    {
+      "start": 1888.12,
+      "end": 1888.7,
+      "text": "I had it--"
+    },
+    {
+      "start": 1889.32,
+      "end": 1890.56,
+      "text": "But honestly, you can deploy this-"
+    },
+    {
+      "start": 1892.95,
+      "end": 1894.22,
+      "text": "And then have a deploy link-"
+    },
+    {
+      "start": 1896.22,
+      "end": 1899.38,
+      "text": "--to ensure that the article that you just generated--"
+    },
+    {
+      "start": 1900.84,
+      "end": 1902.17,
+      "text": "Is then published and-"
+    },
+    {
+      "start": 1906.96,
+      "end": 1908.53,
+      "text": "If you'd like a more in-depth..."
+    },
+    {
+      "start": 1908.94,
+      "end": 1910.81,
+      "text": "If you'd like a more in-depth tutorial on-"
+    },
+    {
+      "start": 1922.02,
+      "end": 1923.65,
+      "text": "Let us know, let us know what-"
+    },
+    {
+      "start": 1930.45,
+      "end": 1932.05,
+      "text": "Let us know what else you're doing with-"
+    },
+    {
+      "start": 1933.87,
+      "end": 1937.84,
+      "text": "Let us know what else you're doing with Cloud Code Routines. This opens up a huge-"
+    },
+    {
+      "start": 1939.24,
+      "end": 1943.81,
+      "text": "Let us know what else you're doing inside of Cloud Code Routines because this feature is-"
+    },
+    {
+      "start": 1945.21,
+      "end": 1945.79,
+      "text": "Let us know-"
+    },
+    {
+      "start": 1946.32,
+      "end": 1947.44,
+      "text": "Also, let us know what else-"
+    },
+    {
+      "start": 1949.35,
+      "end": 1951.19,
+      "text": "Also, let us know what else you're doing in-"
+    },
+    {
+      "start": 1952.65,
+      "end": 1956.89,
+      "text": "Also, let us know what else you're doing inside of Cloud Code Routines since this feature is-"
+    },
+    {
+      "start": 1958.05,
+      "end": 1959.5,
+      "text": "And should allow us to-"
+    },
+    {
+      "start": 1964.98,
+      "end": 1966.64,
+      "text": "Also, let us know what you're do-"
+    },
+    {
+      "start": 1968.28,
+      "end": 1971.47,
+      "text": "Also, let us know what else you're doing inside of Cloud Code Routines since-"
+    },
+    {
+      "start": 1971.52,
+      "end": 1973.51,
+      "text": "This should allow us to build-"
+    },
+    {
+      "start": 1978.75,
+      "end": 1980.95,
+      "text": "Also, let us know what else you're doing inside of-"
+    },
+    {
+      "start": 1982.26,
+      "end": 1984.49,
+      "text": "Also, let us know what else you're doing inside of-"
+    },
+    {
+      "start": 1990.06,
+      "end": 1990.85,
+      "text": "Also, let us know-"
+    },
+    {
+      "start": 1991.62,
+      "end": 1992.05,
+      "text": "All..."
+    },
+    {
+      "start": 1992.13,
+      "end": 1992.41,
+      "text": ""
+    },
+    {
+      "start": 1993.06,
+      "end": 1995.32,
+      "text": "Also, let us know what else you're doing inside of-"
+    },
+    {
+      "start": 1996.72,
+      "end": 1998.47,
+      "text": "Also, let us know what else you're doing with-"
+    },
+    {
+      "start": 2017.03,
+      "end": 2018.45,
+      "text": "As honestly having..."
+    },
+    {
+      "start": 2018.8,
+      "end": 2019.17,
+      "text": "As-"
+    },
+    {
+      "start": 2019.52,
+      "end": 2021.42,
+      "text": "As honestly, having a chron--"
+    },
+    {
+      "start": 2022.22,
+      "end": 2023.04,
+      "text": "As honestly..."
+    },
+    {
+      "start": 2023.84,
+      "end": 2024.48,
+      "text": "As us-"
+    },
+    {
+      "start": 2025.22,
+      "end": 2025.53,
+      "text": ""
+    },
+    {
+      "start": 2025.73,
+      "end": 2028.32,
+      "text": "Honestly, having an agent execute anything-"
+    },
+    {
+      "start": 2028.49,
+      "end": 2030.06,
+      "text": "-- on a given schedule is-"
+    },
+    {
+      "start": 2042.53,
+      "end": 2044.28,
+      "text": "Thanks for watching. Make sure to leave a like and-"
+    },
+    {
+      "start": 2046.34,
+      "end": 2047.46,
+      "text": "Thanks for watching. Make sure to leave-"
+    },
+    {
+      "start": 2055.46,
+      "end": 2055.83,
+      "text": "So then-"
+    }
+  ]
+}

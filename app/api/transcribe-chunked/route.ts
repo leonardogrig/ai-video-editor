@@ -1,5 +1,4 @@
 import { NextRequest } from "next/server";
-import Groq from "groq-sdk";
 import * as fs from "fs";
 import * as path from "path";
 import * as os from "os";
@@ -9,6 +8,7 @@ import {
   supportedLanguages,
   languageToISOCode,
 } from "@/app/constants/languages";
+import { resolveProvider } from "@/app/services/transcriptionProviders";
 
 const execAsync = promisify(exec);
 const unlinkAsync = promisify(fs.unlink);
@@ -16,12 +16,8 @@ const unlinkAsync = promisify(fs.unlink);
 export const runtime = "nodejs";
 export const maxDuration = 3600;
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
-
 const CONCURRENCY = 8;
-const GROQ_TIMEOUT_MS = 60_000;
+const TRANSCRIBE_TIMEOUT_MS = 60_000;
 const FFMPEG_TIMEOUT_MS = 30_000;
 const MAX_RETRIES = 3;
 
@@ -56,10 +52,6 @@ interface SpeechSegment {
   text?: string;
   error?: string;
   skipped?: boolean;
-}
-
-function isGroqConfigured() {
-  return !!process.env.GROQ_API_KEY;
 }
 
 async function cleanupTempFiles(filePaths: string[]) {
@@ -98,7 +90,9 @@ export async function POST(request: NextRequest) {
         fileName,
         segments: segmentsRaw,
         language = "english",
+        provider: providerId = "groq",
       } = body;
+      const provider = resolveProvider(providerId);
 
       if (!filePath || !fileName || !segmentsRaw) {
         await sendProgressUpdate({
@@ -155,11 +149,10 @@ export async function POST(request: NextRequest) {
         return;
       }
 
-      if (!isGroqConfigured()) {
+      if (!provider.isConfigured()) {
         await sendProgressUpdate({
           type: "error",
-          message:
-            "Groq API key is not configured. Please add GROQ_API_KEY to your environment variables.",
+          message: `${provider.label} is not configured. Please add ${provider.envVarName} to your environment variables.`,
         });
         return;
       }
@@ -281,20 +274,12 @@ export async function POST(request: NextRequest) {
 
           let lastErr: any;
           for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
-            const fileStream = fs.createReadStream(segmentPath);
             try {
-              const transcription = await withTimeout(
-                groq.audio.transcriptions.create({
-                  file: fileStream,
-                  model: "whisper-large-v3-turbo",
-                  response_format: "verbose_json",
-                  temperature: 0.0,
-                }),
-                GROQ_TIMEOUT_MS,
+              const { text: transcriptionText } = await withTimeout(
+                provider.transcribe({ filePath: segmentPath, languageCode }),
+                TRANSCRIBE_TIMEOUT_MS,
                 `Transcription timed out for segment ${index + 1}`
               );
-              fileStream.close();
-              const transcriptionText = transcription.text?.trim() || "";
 
               await sendProgressUpdate({
                 type: "segment_complete",
@@ -308,11 +293,6 @@ export async function POST(request: NextRequest) {
 
               return { ...segment, text: transcriptionText };
             } catch (err: any) {
-              try {
-                fileStream.close();
-              } catch {
-                /* noop */
-              }
               lastErr = err;
               const status =
                 err?.status ??
@@ -346,15 +326,15 @@ export async function POST(request: NextRequest) {
             error instanceof Error ? error.message : String(error);
           let errorMessage = rawMessage || "Failed to transcribe";
           if (/could not be decoded|decode/i.test(rawMessage))
-            errorMessage = "Audio format incompatible with Groq API";
+            errorMessage = `Audio format incompatible with ${provider.label}`;
           else if (/too short|duration too short/i.test(rawMessage))
             errorMessage = "Audio segment too short for transcription";
           else if (/timed out/i.test(rawMessage))
             errorMessage = "Transcription request timed out";
-          else if (/authenticate|authentication|API key/i.test(rawMessage))
-            errorMessage = "Invalid Groq API key or authentication error";
-          else if (/rate.?limit/i.test(rawMessage))
-            errorMessage = "Groq API rate limit exceeded";
+          else if (/authenticate|authentication|API key|401/i.test(rawMessage))
+            errorMessage = `Invalid ${provider.label} API key or authentication error`;
+          else if (/rate.?limit|429/i.test(rawMessage))
+            errorMessage = `${provider.label} API rate limit exceeded`;
 
           console.error(
             `[transcribe-chunked] segment ${index + 1} (${segment.start}-${segment.end}s) failed:`,

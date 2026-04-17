@@ -15,10 +15,11 @@ The video editor used to send the transcription to an LLM over OpenRouter for de
    ```
    It auto-locates the single non-`edited.json` file inside `public/transcriptions/`, clusters Whisper retakes via token-level similarity on a 20-second sliding window, keeps the **last** segment of every cluster, drops empty-text segments, and writes `public/transcriptions/edited.json` next to the raw file. Runtime is ~0.1s.
 
-2. **Read the printed cluster report.** It lists the 20 largest retake clusters with `size × [span] kept@start: <kept text>`. Scan for anything suspicious:
+2. **Read the printed cluster report.** It shows two totals (non-speech dropped outright vs. collapsed into retake clusters) and lists the 20 largest retake clusters with `size × [span] kept@start: <kept text>`. Scan for anything suspicious:
    - **Two distinct sentences merged into one cluster.** Symptom: the kept text of a large cluster doesn't share obvious opening words with earlier retake victims — e.g. the cluster spans two unrelated "For example" beats that just happen to share a prefix.
    - **Retakes that weren't clustered.** Symptom: successive kept segments in `edited.json` that say almost the same thing, 2–15s apart. Usually happens when the speaker restarts with very different opening words ("Now just bear in mind…" → "But first, have in mind…").
-   - **Whisper-hallucinated fillers.** Isolated "Thank you." / "Yeah." segments inside long silences. The helper keeps them (they're not clustered); you can drop if obviously artifacts.
+   - **Orphaned continuations.** Symptom: a kept segment starts with `--` or a sentence fragment ("Post.", "Blog.") that reads as the tail of a dropped abandoned predecessor. The upstream segment was abandoned without Scribe marking it as a continuation pair; either accept the orphan or restore the predecessor by editing `edited.json`.
+   - **Hallucinated fillers.** Isolated "Thank you." / "Yeah." segments inside long silences. The helper keeps them (they're not clustered); drop in the UI or hand-edit if obviously artifacts.
 
 3. **Fix anything wrong by editing `edited.json` directly** (it's small). To split a wrongly-merged cluster: add the missing segment(s) from `raw.json` back in, preserving byte-exact `start`/`end`/`text`, and keep the array sorted by `start`. To drop an extra: remove the segment. Update `filteredCount` to match.
 
@@ -30,14 +31,33 @@ The video editor used to send the transcription to an LLM over OpenRouter for de
 
 4. **Report to the user in 1–2 sentences**: the original→filtered counts, anything notable about the cuts (size of the largest retake cluster, any manual fixes you applied). Don't paste the cluster list — they'll review in the UI.
 
-## The rule the helper enforces
+## The rules the helper enforces
 
-**Primary rule: keep the last occurrence of any retake — ALWAYS.** If a phrase is repeated 3 times, keep the 3rd. If 5 times, keep the 5th. Even when the last take is *shorter* or *less polished* than an earlier one — that's the take the speaker committed to. Never substitute an earlier take because you judge it more complete.
+### 1. Drop non-speech segments outright (before clustering)
 
-Only three overrides:
-1. Last segment's `text` is empty/whitespace-only → drop.
-2. Last two are byte-identical and back-to-back (true stutter duplicate) → pick either.
-3. The "last" candidate is actually a *different* sentence that only superficially shares words — in which case the helper correctly didn't cluster it.
+A segment is dropped on sight when any of these hits:
+
+- **Empty / whitespace-only text.**
+- **Standalone stage direction** — entire text wrapped in parens or brackets: `(clears throat)`, `[MUSIC]`, `(laughs)`, `[Inaudible]`. Scribe emits these as their own segment; Whisper-on-Groq emits fewer of them but the rule covers both.
+- **Trailing ellipsis** (`...` or `…`) — consistently means the speaker trailed off / abandoned the take.
+- **Trailing dash** (`-`, `--`, `–`, `—`) when classified as abandoned. The trailing dash is ambiguous in ASR output — it can mark either (a) an abandoned fragment or (b) speech that continues in the next segment. The next segment within 6s is inspected to decide (tried in order):
+    1. Next opens with a leading dash → continuation pair, **keep both**.
+    2. Next is itself non-speech (ends with dash/ellipsis, is an annotation, or has no word tokens) → retake storm, **drop current**.
+    3. Next opens with the same two tokens as current → explicit retake, **drop current**.
+    4. Current ≤ 3 tokens and shares first token with next → short abandoned fragment, **drop current**.
+    5. Next has > 2 word tokens → new sentence, current is abandoned, **drop current**.
+    6. Otherwise (short next, no retake signal) → continuation pair, **keep both**.
+- **Punctuation-only text** — no word characters survive tokenization.
+
+### 1b. Sweep orphaned continuations after clustering
+
+After clustering, if a short (≤ 3 tokens) kept segment sits immediately after a dash-ending segment that got dropped (by the rules above *or* by clustering into a later retake), the kept tail is swept too. Prevents orphans like stray `"Post."` / `"Mm-hmm."` when their `...blog p-` head gets absorbed into a later, fully-worded retake.
+
+### 2. Primary rule: keep the last occurrence of any retake — ALWAYS
+
+After the non-speech segments are removed, remaining segments go through cluster detection. If a phrase is repeated 3 times, keep the 3rd. If 5 times, keep the 5th. Even when the last take is *shorter* or *less polished* than an earlier one — that's the take the speaker committed to. Never substitute an earlier take because you judge it more complete.
+
+The only override: the "last" candidate is actually a *different* sentence that only superficially shares words — in which case the helper correctly didn't cluster it in the first place.
 
 ## How the helper clusters (for debugging false merges / misses)
 
@@ -49,7 +69,7 @@ Only three overrides:
   4. `SequenceMatcher.ratio()` ≥ 0.6 (≥ 0.8 if both are ≤ 5 tokens) → match.
 - Tokenization lowercases and strips punctuation. `"Firecrawl."` and `"firecrawl,"` tokenize the same.
 
-Knobs in `filter.py`: `WINDOW_SECONDS`, `RATIO_LONG`, `RATIO_SHORT`. Tune only if a whole class of retakes is systematically missed — single edge cases are faster to patch by hand-editing `edited.json`.
+Knobs in `filter.py`: `WINDOW_SECONDS`, `RATIO_LONG`, `RATIO_SHORT`, `CONTINUATION_GAP_SECONDS`. Tune only if a whole class of retakes is systematically missed — single edge cases are faster to patch by hand-editing `edited.json`.
 
 ## Edge cases
 

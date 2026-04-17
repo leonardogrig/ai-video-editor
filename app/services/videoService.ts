@@ -212,7 +212,8 @@ export async function transcribeVideo(
     fileName: string;
     fileSize: number;
     sessionId: string;
-  }
+  },
+  provider: string = "groq"
 ) {
   try {
     if (uploadInfo) {
@@ -234,6 +235,7 @@ export async function transcribeVideo(
           fileName: uploadInfo.fileName,
           segments,
           language,
+          provider,
         }),
       });
 
@@ -288,6 +290,7 @@ export async function transcribeVideo(
           fileName: videoFile.name,
           segments,
           language,
+          provider,
         }),
       });
 
@@ -312,6 +315,7 @@ export async function transcribeVideo(
       formData.append("videoFile", videoFile);
       formData.append("segments", JSON.stringify(segments));
       formData.append("language", language);
+      formData.append("provider", provider);
 
       const controller = new AbortController();
       const timeoutId = setTimeout(() => {

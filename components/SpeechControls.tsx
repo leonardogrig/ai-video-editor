@@ -13,6 +13,25 @@ import { Volume1, Volume2 } from "lucide-react";
 import { formatLanguage } from "@/app/utils/formatters";
 import { DialogControls } from "./types";
 
+export type TranscriptionProviderOption = {
+  id: string;
+  label: string;
+  description: string;
+};
+
+export const TRANSCRIPTION_PROVIDERS: TranscriptionProviderOption[] = [
+  {
+    id: "groq",
+    label: "Groq — Whisper large-v3 turbo",
+    description: "Fast and free-tier friendly. Produces Whisper-style retakes.",
+  },
+  {
+    id: "elevenlabs",
+    label: "ElevenLabs Scribe v1",
+    description: "Higher accuracy, fewer retakes. Paid; needs ELEVENLABS_API_KEY.",
+  },
+];
+
 interface SpeechControlsProps {
   dialogControls: DialogControls;
   audioUrl: string;
@@ -21,6 +40,7 @@ interface SpeechControlsProps {
   isDialogProcessing: boolean;
   isTranscribing: boolean;
   transcriptionProgress: string;
+  transcriptionProvider: string;
   isCreatingRequest?: boolean;
   isReadingResponse?: boolean;
   aiExchangeStatus?: string | null;
@@ -31,6 +51,7 @@ interface SpeechControlsProps {
   onApplyChanges: () => void;
   onTranscribe: () => void;
   onLanguageChange: (language: string) => void;
+  onProviderChange: (providerId: string) => void;
   onCreateThresholdRequest?: () => void;
   onSetThresholdFromResponse?: () => void;
   progressButton?: React.ReactNode;
@@ -93,6 +114,7 @@ export function SpeechControls({
   isDialogProcessing,
   isTranscribing,
   transcriptionProgress,
+  transcriptionProvider,
   isCreatingRequest = false,
   isReadingResponse = false,
   aiExchangeStatus = null,
@@ -103,10 +125,14 @@ export function SpeechControls({
   onApplyChanges,
   onTranscribe,
   onLanguageChange,
+  onProviderChange,
   onCreateThresholdRequest,
   onSetThresholdFromResponse,
   progressButton,
 }: SpeechControlsProps) {
+  const activeProvider =
+    TRANSCRIPTION_PROVIDERS.find((p) => p.id === transcriptionProvider) ??
+    TRANSCRIPTION_PROVIDERS[0];
   return (
     <div className="mt-4 p-4 border-2 border-black bg-gray-50">
       <h3 className="text-sm font-bold mb-3">Adjust Speech Detection</h3>
@@ -294,6 +320,33 @@ export function SpeechControls({
         </div>
 
         <div className="mt-4 border-t-2 border-gray-200 pt-4">
+          <div className="flex items-center justify-between mb-2">
+            <Label
+              htmlFor="transcribeProvider"
+              className="text-sm font-medium"
+            >
+              Transcription Provider
+            </Label>
+            <span className="text-xs text-gray-500">
+              Using: {activeProvider.label.split(" — ")[0]}
+            </span>
+          </div>
+          <Select value={transcriptionProvider} onValueChange={onProviderChange}>
+            <SelectTrigger className="w-full" id="transcribeProvider">
+              <SelectValue placeholder="Select provider" />
+            </SelectTrigger>
+            <SelectContent>
+              {TRANSCRIPTION_PROVIDERS.map((p) => (
+                <SelectItem key={p.id} value={p.id}>
+                  {p.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <p className="text-xs text-gray-500 mt-1">{activeProvider.description}</p>
+        </div>
+
+        <div className="mt-4">
           <div className="flex items-center justify-between mb-2">
             <Label
               htmlFor="transcribeLanguage"
