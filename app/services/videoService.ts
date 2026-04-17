@@ -114,10 +114,11 @@ export async function removeSilence(
         },
         body: JSON.stringify({
           ...uploadResult,
-          volumeThreshold: params.volumeThreshold,
-          paddingDurationMs: params.paddingDurationMs,
-          speechPaddingMs: params.speechPaddingMs,
-          silencePaddingMs: params.silencePaddingMs,
+          noiseThresholdDb: params.noiseThresholdDb,
+          removeSilencesLongerThanMs: params.removeSilencesLongerThanMs,
+          keepTalksLongerThanMs: params.keepTalksLongerThanMs,
+          marginBeforeMs: params.marginBeforeMs,
+          marginAfterMs: params.marginAfterMs,
         }),
       });
 
@@ -152,10 +153,17 @@ export async function removeSilence(
 
     const formData = new FormData();
     formData.append("file", videoFile);
-    formData.append("volumeThreshold", params.volumeThreshold.toString());
-    formData.append("paddingDurationMs", params.paddingDurationMs.toString());
-    formData.append("speechPaddingMs", params.speechPaddingMs.toString());
-    formData.append("silencePaddingMs", params.silencePaddingMs.toString());
+    formData.append("noiseThresholdDb", params.noiseThresholdDb.toString());
+    formData.append(
+      "removeSilencesLongerThanMs",
+      params.removeSilencesLongerThanMs.toString()
+    );
+    formData.append(
+      "keepTalksLongerThanMs",
+      params.keepTalksLongerThanMs.toString()
+    );
+    formData.append("marginBeforeMs", params.marginBeforeMs.toString());
+    formData.append("marginAfterMs", params.marginAfterMs.toString());
 
     if (onProgress) {
       onProgress({
@@ -432,32 +440,141 @@ async function handleStreamingResponse(
   });
 }
 
-export async function filterTranscribedSegments(
-  segments: SpeechSegment[]
-): Promise<{
-  filteredSegments: SpeechSegment[];
-  warning?: string;
-  error?: string;
-  model?: string;
-}> {
-  try {
-    const response = await fetch("/api/filter-segments", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ segments }),
+export async function createNoiseThresholdRequest(
+  uploadInfo: {
+    filePath: string;
+    fileName: string;
+    fileSize: number;
+    sessionId: string;
+  } | null,
+  videoFile?: File | null
+): Promise<{ path: string; prompt: string; stats?: any; summary?: string; mentalModel?: string }> {
+  let body: BodyInit;
+  let headers: HeadersInit = {};
+
+  if (uploadInfo?.filePath) {
+    body = JSON.stringify({
+      filePath: uploadInfo.filePath,
+      fileName: uploadInfo.fileName,
     });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || "Failed to filter segments");
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error in AI filtering:", error);
-    throw error;
+    headers = { "Content-Type": "application/json" };
+  } else if (videoFile) {
+    const formData = new FormData();
+    formData.append("file", videoFile);
+    body = formData;
+  } else {
+    throw new Error("No video file available to create request");
   }
+
+  const response = await fetch("/api/ai-exchange/noise-threshold", {
+    method: "POST",
+    headers,
+    body,
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(
+      errorData.error || `Failed to create request (${response.status})`
+    );
+  }
+
+  return await response.json();
 }
+
+export async function readNoiseThresholdResponse(): Promise<
+  | { status: "missing"; path: string }
+  | { status: "pending"; path: string }
+  | {
+      status: "ready";
+      path: string;
+      noise_threshold_db: number;
+      raw_value: number;
+      offset_applied: number;
+    }
+  | { status: "invalid"; path: string; error: string }
+> {
+  const response = await fetch("/api/ai-exchange/noise-threshold", {
+    method: "GET",
+  });
+
+  const data = await response.json();
+  if (!response.ok && data.status !== "invalid") {
+    throw new Error(data.error || `Failed to read response (${response.status})`);
+  }
+  return data;
+}
+
+export async function probeTranscriptionCache(
+  fileName: string,
+  fileSize?: number
+): Promise<
+  | { status: "missing"; path: string }
+  | { status: "invalid"; path: string; error: string }
+  | {
+      status: "size-mismatch";
+      path: string;
+      cachedSize: number;
+      actualSize: number;
+    }
+  | {
+      status: "hit";
+      path: string;
+      fileName: string;
+      fileSize: number | null;
+      language: string | null;
+      segments: SpeechSegment[];
+      createdAt: string;
+    }
+> {
+  const params = new URLSearchParams({ fileName });
+  if (typeof fileSize === "number") params.set("fileSize", String(fileSize));
+  const response = await fetch(`/api/transcription-cache?${params.toString()}`);
+  return response.json();
+}
+
+export async function saveTranscriptionCache(data: {
+  fileName: string;
+  fileSize?: number;
+  language: string;
+  segments: SpeechSegment[];
+}): Promise<{ ok: boolean; path: string; error?: string }> {
+  const response = await fetch("/api/transcription-cache", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+}
+
+export async function getRawTranscriptionPath(): Promise<
+  | { status: "missing"; dir: string }
+  | { status: "ambiguous"; dir: string; candidates: string[] }
+  | { status: "ready"; path: string; fileName: string }
+> {
+  const response = await fetch("/api/transcription-raw-path");
+  return response.json();
+}
+
+export async function importEditedTranscription(): Promise<
+  | { status: "missing"; path: string }
+  | { status: "invalid"; path: string; error: string }
+  | {
+      status: "ready";
+      path: string;
+      segments: SpeechSegment[];
+      originalCount: number | null;
+      filteredCount: number;
+      createdAt: string | null;
+    }
+> {
+  const response = await fetch("/api/import-edited-transcription", {
+    method: "GET",
+  });
+  const data = await response.json();
+  if (!response.ok && data.status !== "invalid" && data.status !== "missing") {
+    throw new Error(data.error || `Failed to import edited transcription (${response.status})`);
+  }
+  return data;
+}
+

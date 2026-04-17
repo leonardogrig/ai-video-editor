@@ -33,6 +33,12 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# ai-exchange runtime files (README is committed)
+/ai-exchange/*.json
+
+# cached transcriptions (per-video result files)
+/public/transcriptions/
+
 # vercel
 .vercel
 

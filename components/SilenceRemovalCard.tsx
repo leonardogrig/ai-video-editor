@@ -37,6 +37,12 @@ interface SilenceRemovalCardProps {
   audioUrl: string | null;
   dialogControls: DialogControls;
   isDialogProcessing: boolean;
+  isCreatingRequest?: boolean;
+  isReadingResponse?: boolean;
+  aiExchangeStatus?: string | null;
+  aiExchangePath?: string | null;
+  aiExchangePrompt?: string | null;
+  cachedTranscriptionAvailable?: boolean;
   transcribedSegments: SpeechSegment[] | null;
   isTranscribing: boolean;
   transcriptionProgress: string;
@@ -50,6 +56,8 @@ interface SilenceRemovalCardProps {
   onLanguageChange: (language: string) => void;
   onDiscardTranscription: () => void;
   onDialogOpen: () => void;
+  onCreateThresholdRequest?: () => void;
+  onSetThresholdFromResponse?: () => void;
   filteredSegments?: SpeechSegment[] | null;
   progressButton?: React.ReactNode;
   uploadProgress?: number;
@@ -65,6 +73,12 @@ export function SilenceRemovalCard({
   audioUrl,
   dialogControls,
   isDialogProcessing,
+  isCreatingRequest = false,
+  isReadingResponse = false,
+  aiExchangeStatus = null,
+  aiExchangePath = null,
+  aiExchangePrompt = null,
+  cachedTranscriptionAvailable = false,
   transcribedSegments,
   isTranscribing,
   transcriptionProgress,
@@ -78,6 +92,8 @@ export function SilenceRemovalCard({
   onLanguageChange,
   onDiscardTranscription,
   onDialogOpen,
+  onCreateThresholdRequest,
+  onSetThresholdFromResponse,
   filteredSegments,
   progressButton,
   uploadProgress = 0,
@@ -138,18 +154,26 @@ export function SilenceRemovalCard({
             )}
             
             {!transcribedSegments && (
-              <SpeechControls 
+              <SpeechControls
                 dialogControls={dialogControls}
                 audioUrl={audioUrl}
                 selectedLanguage={selectedLanguage}
                 supportedLanguages={supportedLanguages}
                 isDialogProcessing={isDialogProcessing}
+                isCreatingRequest={isCreatingRequest}
+                isReadingResponse={isReadingResponse}
+                aiExchangeStatus={aiExchangeStatus}
+                aiExchangePath={aiExchangePath}
+                aiExchangePrompt={aiExchangePrompt}
+                cachedTranscriptionAvailable={cachedTranscriptionAvailable}
                 isTranscribing={isTranscribing}
                 transcriptionProgress={transcriptionProgress}
                 onControlChange={onDialogControlChange}
                 onApplyChanges={onApplyChanges}
                 onTranscribe={onTranscribe}
                 onLanguageChange={onLanguageChange}
+                onCreateThresholdRequest={onCreateThresholdRequest}
+                onSetThresholdFromResponse={onSetThresholdFromResponse}
                 progressButton={progressButton}
               />
             )}

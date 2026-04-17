@@ -16,13 +16,25 @@ import { supportedLanguages } from "./constants/languages";
 import {
   removeSilence,
   transcribeVideo,
-  filterTranscribedSegments,
+  importEditedTranscription,
+  createNoiseThresholdRequest,
+  readNoiseThresholdResponse,
+  probeTranscriptionCache,
+  saveTranscriptionCache,
 } from "./services/videoService";
 import { neoBrutalismStyles } from "./styles/neo-brutalism";
 import { SelectedSegmentsPlayer } from "@/components/SelectedSegmentsPlayer";
 import { TranscriptionProgressDialog } from "./components/TranscriptionProgressDialog";
 import { TranscriptionProgressButton } from "./components/TranscriptionProgressButton";
 import { createXmlFromSegments } from "@/lib/utils";
+
+const DEFAULT_CONTROLS: DialogControls = {
+  noiseThresholdDb: -44,
+  removeSilencesLongerThanMs: 130,
+  keepTalksLongerThanMs: 120,
+  marginBeforeMs: 50,
+  marginAfterMs: 50,
+};
 
 // Create a custom hook for the transcription progress dialog
 function useTranscriptionProgressDialog(
@@ -87,18 +99,21 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [volumeThreshold, setVolumeThreshold] = useState<number>(35);
-  const [paddingDurationMs, setPaddingDurationMs] = useState<number>(0);
-  const [speechPaddingMs, setSpeechPaddingMs] = useState<number>(50);
-  const [silencePaddingMs, setSilencePaddingMs] = useState<number>(500);
+  const [activeParams, setActiveParams] = useState<SilenceRemovalParams>({
+    ...DEFAULT_CONTROLS,
+  });
 
   const [dialogControls, setDialogControls] = useState<DialogControls>({
-    volumeThreshold: 35,
-    paddingDurationMs: 0,
-    speechPaddingMs: 50,
-    silencePaddingMs: 500,
+    ...DEFAULT_CONTROLS,
   });
   const [isDialogProcessing, setIsDialogProcessing] = useState(false);
+  const [isCreatingRequest, setIsCreatingRequest] = useState(false);
+  const [isReadingResponse, setIsReadingResponse] = useState(false);
+  const [aiExchangeStatus, setAiExchangeStatus] = useState<string | null>(null);
+  const [aiExchangePath, setAiExchangePath] = useState<string | null>(null);
+  const [aiExchangePrompt, setAiExchangePrompt] = useState<string | null>(null);
+  const [cachedTranscriptionAvailable, setCachedTranscriptionAvailable] =
+    useState<boolean>(false);
 
   const [isTranscribing, setIsTranscribing] = useState<boolean>(false);
   const [transcriptionProgress, setTranscriptionProgress] = useState<string>(
@@ -123,7 +138,8 @@ export default function Home() {
   const [filteredSegments, setFilteredSegments] = useState<
     SpeechSegment[] | null
   >(null);
-  const [isFiltering, setIsFiltering] = useState<boolean>(false);
+  const [isImportingEdited, setIsImportingEdited] = useState<boolean>(false);
+  const [importEditedStatus, setImportEditedStatus] = useState<string | null>(null);
   const [filteringError, setFilteringError] = useState<string | null>(null);
 
   const [filterModel, setFilterModel] = useState<string | undefined>(undefined);
@@ -188,6 +204,18 @@ export default function Home() {
       setAudioUrl(null);
       setError(null);
       setFilteredSegments(null);
+      setTranscribedSegments(null);
+      setCachedTranscriptionAvailable(false);
+
+      probeTranscriptionCache(file.name, file.size)
+        .then((probe) => {
+          if (probe.status === "hit") {
+            setCachedTranscriptionAvailable(true);
+          }
+        })
+        .catch(() => {
+          // cache probe is best-effort; ignore errors
+        });
 
       // Store file name and path information
       if (fileInfo) {
@@ -213,6 +241,21 @@ export default function Home() {
     setTranscriptionError(null);
     setUploadProgress(0);
     setUploadMessage("");
+
+    if (videoFile) {
+      try {
+        const probe = await probeTranscriptionCache(videoFile.name, videoFile.size);
+        if (probe.status === "hit" && probe.segments?.length) {
+          setTranscribedSegments(probe.segments);
+          setTranscriptionProgress("100%");
+          setCachedTranscriptionAvailable(true);
+          setIsTranscribing(false);
+          return;
+        }
+      } catch (err) {
+        console.warn("Transcription cache probe failed:", err);
+      }
+    }
 
     try {
       const result = await transcribeVideo(
@@ -278,6 +321,18 @@ export default function Home() {
 
       if (typedResult.segments) {
         setTranscribedSegments(typedResult.segments);
+        if (videoFile) {
+          saveTranscriptionCache({
+            fileName: videoFile.name,
+            fileSize: videoFile.size,
+            language: selectedLanguage,
+            segments: typedResult.segments,
+          })
+            .then(() => setCachedTranscriptionAvailable(true))
+            .catch((err) =>
+              console.warn("Failed to cache transcription:", err)
+            );
+        }
       }
     } catch (error) {
       console.error("Error transcribing:", error);
@@ -291,52 +346,46 @@ export default function Home() {
     }
   };
 
-  const handleFilterWithAI = async () => {
+  const handleImportEdited = async () => {
     if (!transcribedSegments) return;
 
-    setIsFiltering(true);
+    setIsImportingEdited(true);
     setFilteringError(null);
-    setFilterModel(undefined);
+    setImportEditedStatus(null);
+    setFilterModel("claude-code:filter-transcription");
 
     try {
-      const result = await filterTranscribedSegments(transcribedSegments);
+      const result = await importEditedTranscription();
 
-      if (result.model) {
-        setFilterModel(result.model);
-      }
-
-      if (result.filteredSegments) {
-        setFilteredSegments(result.filteredSegments);
-
-        if (result.warning) {
-          setFilteringError(`Warning: ${result.warning}`);
-        } else if (result.error) {
-          setFilteringError(`Note: ${result.error}`);
-        }
-
-        const originalCount = transcribedSegments.length;
-        const filteredCount = result.filteredSegments.length;
-
-        if (originalCount === filteredCount && !result.warning && !result.error) {
-          setFilteringError(
-            "AI did not filter out any segments. All segments were kept as is."
-          );
-        }
-      } else {
-        setFilteringError(
-          "Failed to get filtered segments from the AI. Please try again."
+      if (result.status === "missing") {
+        setImportEditedStatus(
+          "No edited.json found. Ask Claude Code to run the filter-transcription skill first."
         );
+        return;
       }
+
+      if (result.status === "invalid") {
+        setFilteringError(`edited.json is invalid: ${result.error}`);
+        return;
+      }
+
+      setFilteredSegments(result.segments);
+
+      const original = result.originalCount ?? transcribedSegments.length;
+      const removed = original - result.filteredCount;
+      setImportEditedStatus(
+        `Imported ${result.filteredCount} segments (removed ${removed} from ${original}).`
+      );
     } catch (error) {
-      console.error("Error filtering segments:", error);
+      console.error("Error importing edited transcription:", error);
       setFilteringError(
         error instanceof Error
           ? error.message
-          : "An error occurred during AI filtering"
+          : "An error occurred while importing edited.json"
       );
       setFilteredSegments(null);
     } finally {
-      setIsFiltering(false);
+      setIsImportingEdited(false);
     }
   };
 
@@ -365,12 +414,7 @@ export default function Home() {
     try {
       const result = await removeSilence(
         videoFile,
-        {
-          volumeThreshold,
-          paddingDurationMs: 0,
-          speechPaddingMs,
-          silencePaddingMs,
-        },
+        { ...activeParams },
         (progressData) => {
           if (progressData.type === "status") {
             setProcessingStatus(progressData.status || "");
@@ -431,12 +475,7 @@ export default function Home() {
 
     removeSilence(
       videoFile,
-      {
-        volumeThreshold,
-        paddingDurationMs: 0,
-        speechPaddingMs,
-        silencePaddingMs,
-      },
+      { ...activeParams },
       (progressData) => {
         if (progressData.type === "status") {
           setProcessingStatus(progressData.status || "");
@@ -491,12 +530,7 @@ export default function Home() {
     try {
       const result = await removeSilence(
         videoFile,
-        {
-          volumeThreshold: dialogControls.volumeThreshold,
-          paddingDurationMs: 0,
-          speechPaddingMs: dialogControls.speechPaddingMs,
-          silencePaddingMs: dialogControls.silencePaddingMs,
-        },
+        { ...dialogControls },
         (progressData) => {
           if (progressData.type === "status") {
             setProcessingStatus(progressData.status || "");
@@ -511,10 +545,7 @@ export default function Home() {
         setUploadInfo(result.uploadInfo);
       }
 
-      setVolumeThreshold(dialogControls.volumeThreshold);
-      setPaddingDurationMs(0);
-      setSpeechPaddingMs(dialogControls.speechPaddingMs);
-      setSilencePaddingMs(dialogControls.silencePaddingMs);
+      setActiveParams({ ...dialogControls });
 
       if (videoFileName && videoFilePath) {
         let filePath = videoFilePath;
@@ -549,17 +580,78 @@ export default function Home() {
   };
 
   const handleDialogControlChange = (key: keyof DialogControls, value: number) => {
-    if (key === "paddingDurationMs") return;
     setDialogControls((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleDialogOpen = () => {
-    setDialogControls({
-      volumeThreshold,
-      paddingDurationMs,
-      speechPaddingMs,
-      silencePaddingMs,
-    });
+    setDialogControls({ ...activeParams });
+  };
+
+  const handleCreateThresholdRequest = async () => {
+    if (!videoFile || isCreatingRequest) return;
+
+    setIsCreatingRequest(true);
+    setAiExchangeStatus("Writing request file…");
+    setAiExchangePrompt(null);
+    try {
+      const { path, prompt } = await createNoiseThresholdRequest(
+        uploadInfo ?? null,
+        videoFile
+      );
+      setAiExchangePath(path);
+      setAiExchangePrompt(prompt);
+      setAiExchangeStatus(
+        `Request written. Copy the prompt below into Claude Code, then click Set from Response.`
+      );
+    } catch (error) {
+      console.error("Error creating noise threshold request:", error);
+      setAiExchangeStatus(
+        error instanceof Error ? error.message : "Failed to create request"
+      );
+    } finally {
+      setIsCreatingRequest(false);
+    }
+  };
+
+  const handleSetThresholdFromResponse = async () => {
+    if (isReadingResponse) return;
+
+    setIsReadingResponse(true);
+    try {
+      const result = await readNoiseThresholdResponse();
+      setAiExchangePath(result.path);
+
+      if (result.status === "missing") {
+        setAiExchangePrompt(null);
+        setAiExchangeStatus(
+          "No request in flight. Click Create JSON first."
+        );
+      } else if (result.status === "pending") {
+        setAiExchangeStatus(
+          "Still waiting — noise_threshold_db is null. Ask Claude to fill it in."
+        );
+      } else if (result.status === "invalid") {
+        setAiExchangeStatus(`File is invalid JSON: ${result.error}`);
+      } else if (result.status === "ready") {
+        const clamped = Math.max(-80, Math.min(0, Math.round(result.noise_threshold_db)));
+        setDialogControls((prev) => ({ ...prev, noiseThresholdDb: clamped }));
+        setAiExchangePrompt(null);
+        const offsetNote =
+          result.offset_applied
+            ? ` (AI picked ${result.raw_value}, +${result.offset_applied} calibration → ${clamped})`
+            : "";
+        setAiExchangeStatus(
+          `Threshold set to ${clamped} dB${offsetNote}. File consumed.`
+        );
+      }
+    } catch (error) {
+      console.error("Error reading noise threshold response:", error);
+      setAiExchangeStatus(
+        error instanceof Error ? error.message : "Failed to read response"
+      );
+    } finally {
+      setIsReadingResponse(false);
+    }
   };
 
   const handleDiscardTranscription = () => {
@@ -602,6 +694,12 @@ export default function Home() {
                 audioUrl={audioUrl}
                 dialogControls={dialogControls}
                 isDialogProcessing={isDialogProcessing}
+                isCreatingRequest={isCreatingRequest}
+                isReadingResponse={isReadingResponse}
+                aiExchangeStatus={aiExchangeStatus}
+                aiExchangePath={aiExchangePath}
+                aiExchangePrompt={aiExchangePrompt}
+                cachedTranscriptionAvailable={cachedTranscriptionAvailable}
                 transcribedSegments={transcribedSegments}
                 isTranscribing={isTranscribing}
                 transcriptionProgress={transcriptionProgress}
@@ -615,6 +713,8 @@ export default function Home() {
                 onLanguageChange={setSelectedLanguage}
                 onDiscardTranscription={handleDiscardTranscription}
                 onDialogOpen={handleDialogOpen}
+                onCreateThresholdRequest={handleCreateThresholdRequest}
+                onSetThresholdFromResponse={handleSetThresholdFromResponse}
                 filteredSegments={filteredSegments}
                 progressButton={progressButton}
                 uploadProgress={uploadProgress}
@@ -636,15 +736,16 @@ export default function Home() {
             transcribedSegments={transcribedSegments}
             onDiscardTranscription={handleDiscardTranscription}
             transcriptionError={transcriptionError}
-            onFilterWithAI={handleFilterWithAI}
-            isFiltering={isFiltering}
+            onImportEdited={handleImportEdited}
+            isImporting={isImportingEdited}
+            importStatus={importEditedStatus}
           />
         )}
 
         {filteringError && (
           <div className="mt-4 p-4 border-2 border-red-300 bg-red-50 rounded">
             <h3 className="text-sm font-bold text-red-700">
-              AI Filtering Error
+              Import Error
             </h3>
             <p className="text-red-600 text-sm mt-1">{filteringError}</p>
           </div>

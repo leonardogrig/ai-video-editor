@@ -10,15 +10,8 @@ import { supportedLanguages, languageToISOCode } from '@/app/constants/languages
 const execAsync = promisify(exec);
 const unlinkAsync = promisify(fs.unlink);
 
-// Configuration for the API route
-export const config = {
-  api: {
-    responseLimit: false,
-    bodyParser: {
-      sizeLimit: Infinity // No size limit for local development
-    }
-  },
-};
+export const runtime = "nodejs";
+export const maxDuration = 300;
 
 // Initialize Groq client
 const groq = new Groq({
@@ -363,7 +356,7 @@ export async function POST(request: NextRequest) {
             const transcription = await withTimeout(
               groq.audio.transcriptions.create({
                 file: fileStream,
-                model: "distil-whisper-large-v3-en",
+                model: "whisper-large-v3-turbo",
                 response_format: "verbose_json",
                 temperature: 0.0, // Use lowest temperature for most accurate transcription
               }),

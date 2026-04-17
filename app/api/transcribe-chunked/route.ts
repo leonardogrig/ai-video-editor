@@ -1,54 +1,55 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import Groq from "groq-sdk";
 import * as fs from "fs";
 import * as path from "path";
 import * as os from "os";
 import { exec } from "child_process";
 import { promisify } from "util";
-import { supportedLanguages, languageToISOCode } from '@/app/constants/languages';
+import {
+  supportedLanguages,
+  languageToISOCode,
+} from "@/app/constants/languages";
 
 const execAsync = promisify(exec);
 const unlinkAsync = promisify(fs.unlink);
 
-// Configuration for the API route
-export const config = {
-  api: {
-    responseLimit: false,
-  },
-};
+export const runtime = "nodejs";
+export const maxDuration = 3600;
 
-// Initialize Groq client
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
-// Add a timeout wrapper for promises
-const withTimeout = (
-  promise: Promise<any>,
+const CONCURRENCY = 8;
+const GROQ_TIMEOUT_MS = 60_000;
+const FFMPEG_TIMEOUT_MS = 30_000;
+const MAX_RETRIES = 3;
+
+const withTimeout = <T>(
+  promise: Promise<T>,
   timeoutMs: number,
   errorMessage: string
-) => {
-  // Create a promise that rejects in <timeoutMs> milliseconds
-  const timeoutPromise = new Promise((_, reject) => {
-    setTimeout(() => {
-      reject(new Error(errorMessage));
-    }, timeoutMs);
+): Promise<T> =>
+  new Promise<T>((resolve, reject) => {
+    const id = setTimeout(() => reject(new Error(errorMessage)), timeoutMs);
+    promise.then(
+      (v) => {
+        clearTimeout(id);
+        resolve(v);
+      },
+      (e) => {
+        clearTimeout(id);
+        reject(e);
+      }
+    );
   });
 
-  // Returns a race between the timeout and the passed promise
-  return Promise.race([promise, timeoutPromise]);
-};
-
-// Check for FFmpeg availability at the start
-async function checkFFmpegAvailability() {
-  return new Promise<boolean>((resolve) => {
-    exec("ffmpeg -version", (error) => {
-      resolve(!error);
-    });
+async function checkFFmpegAvailability(): Promise<boolean> {
+  return new Promise((resolve) => {
+    exec("ffmpeg -version", (error) => resolve(!error));
   });
 }
 
-// Define interfaces for the segment types
 interface SpeechSegment {
   start: number;
   end: number;
@@ -57,9 +58,20 @@ interface SpeechSegment {
   skipped?: boolean;
 }
 
-// Add a function to check if Groq is properly configured
 function isGroqConfigured() {
   return !!process.env.GROQ_API_KEY;
+}
+
+async function cleanupTempFiles(filePaths: string[]) {
+  for (const filePath of filePaths) {
+    try {
+      if (fs.existsSync(filePath)) {
+        await unlinkAsync(filePath);
+      }
+    } catch (e) {
+      console.warn(`Failed to delete temp file: ${filePath}`, e);
+    }
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -70,15 +82,6 @@ export async function POST(request: NextRequest) {
   const sendProgressUpdate = async (data: any) => {
     await writer.write(encoder.encode(`data: ${JSON.stringify(data)}\n\n`));
   };
-
-  const globalTimeoutId = setTimeout(async () => {
-    console.error("Global timeout reached for transcription request");
-    await sendProgressUpdate({
-      type: "error",
-      message: "Global timeout reached",
-    });
-    await writer.close();
-  }, 30 * 60 * 1000);
 
   const tempFiles: string[] = [];
 
@@ -102,8 +105,6 @@ export async function POST(request: NextRequest) {
           type: "error",
           message: "Missing video file path or segments data",
         });
-        await writer.close();
-        clearTimeout(globalTimeoutId);
         return;
       }
 
@@ -112,33 +113,29 @@ export async function POST(request: NextRequest) {
           type: "error",
           message: "Video file not found on server",
         });
-        await writer.close();
-        clearTimeout(globalTimeoutId);
         return;
       }
 
-      const normalizedLanguage = language.toLowerCase();
+      const normalizedLanguage = (language as string).toLowerCase();
       if (!supportedLanguages.includes(normalizedLanguage)) {
         await sendProgressUpdate({
           type: "error",
           message: "Unsupported language specified",
-          supportedLanguages: supportedLanguages,
+          supportedLanguages,
         });
-        await writer.close();
-        clearTimeout(globalTimeoutId);
         return;
       }
 
       const languageCode = languageToISOCode[normalizedLanguage] || "en";
-      const segments = typeof segmentsRaw === "string" ? JSON.parse(segmentsRaw) : segmentsRaw;
+      const segments = (
+        typeof segmentsRaw === "string" ? JSON.parse(segmentsRaw) : segmentsRaw
+      ) as SpeechSegment[];
 
       if (!Array.isArray(segments) || segments.length === 0) {
         await sendProgressUpdate({
           type: "error",
           message: "Invalid segments data",
         });
-        await writer.close();
-        clearTimeout(globalTimeoutId);
         return;
       }
 
@@ -149,46 +146,55 @@ export async function POST(request: NextRequest) {
         totalSegments: segments.length,
       });
 
-      const videoPath = filePath;
-      tempFiles.push(videoPath);
-
-      await sendProgressUpdate({
-        type: "status",
-        status: "checking",
-        message: "Checking FFmpeg availability...",
-      });
-
       const isFFmpegAvailable = await checkFFmpegAvailability();
       if (!isFFmpegAvailable) {
         await sendProgressUpdate({
           type: "error",
           message: "FFmpeg is not installed or not in your system PATH",
-          installationInstructions: {
-            windows: "1. Download FFmpeg from https://ffmpeg.org/download.html (select Windows builds)\n2. Extract the ZIP file to a folder (e.g., C:\\ffmpeg)\n3. Add FFmpeg to PATH:\n   - Right-click on 'This PC' and select 'Properties'\n   - Click on 'Advanced system settings'\n   - Click 'Environment Variables'\n   - Under System Variables, find 'Path' and click 'Edit'\n   - Click 'New' and add the path to ffmpeg's bin folder (e.g., C:\\ffmpeg\\bin)\n   - Click 'OK' on all dialogs\n4. Restart your computer\n5. Open a new command prompt and verify by typing: ffmpeg -version",
-            mac: "Install with Homebrew: brew install ffmpeg",
-            linux: "Install with apt: sudo apt install ffmpeg\nor\nInstall with yum: sudo yum install ffmpeg",
-          },
         });
-        await writer.close();
-        clearTimeout(globalTimeoutId);
-        await cleanupTempFiles(tempFiles);
         return;
       }
 
       if (!isGroqConfigured()) {
         await sendProgressUpdate({
           type: "error",
-          message: "Groq API key is not configured. Please add GROQ_API_KEY to your environment variables.",
+          message:
+            "Groq API key is not configured. Please add GROQ_API_KEY to your environment variables.",
         });
-        await writer.close();
-        clearTimeout(globalTimeoutId);
         return;
       }
 
-      const validSegments = segments.filter((segment) => {
-        const duration = segment.end - segment.start;
-        return duration >= 0.1;
-      });
+      const baseName = path.parse(fileName).name;
+      const audioSourcePath = path.join(
+        process.cwd(),
+        "public",
+        "temp",
+        `${baseName}.wav`
+      );
+
+      if (!fs.existsSync(audioSourcePath)) {
+        await sendProgressUpdate({
+          type: "status",
+          status: "extracting",
+          message:
+            "Pre-extracting audio from video (one-time cost, reused across all segments)...",
+        });
+        const publicTempDir = path.join(process.cwd(), "public", "temp");
+        if (!fs.existsSync(publicTempDir)) {
+          fs.mkdirSync(publicTempDir, { recursive: true });
+        }
+        await withTimeout(
+          execAsync(
+            `ffmpeg -y -i "${filePath}" -vn -ac 1 -ar 16000 -c:a pcm_s16le "${audioSourcePath}"`
+          ),
+          10 * 60_000,
+          "Audio extraction timed out"
+        );
+      }
+
+      const validSegments = segments.filter(
+        (segment) => segment.end - segment.start >= 0.1
+      );
 
       await sendProgressUpdate({
         type: "status",
@@ -201,21 +207,25 @@ export async function POST(request: NextRequest) {
       if (validSegments.length === 0) {
         await sendProgressUpdate({
           type: "error",
-          message: "No valid segments to transcribe - all segments are too short (< 0.1s)",
+          message:
+            "No valid segments to transcribe - all segments are too short (< 0.1s)",
         });
-        await writer.close();
-        clearTimeout(globalTimeoutId);
-        await cleanupTempFiles(tempFiles);
         return;
       }
 
-      const segmentsToProcess = validSegments;
-      const processedSegments: SpeechSegment[] = [];
-      const BATCH_SIZE = 1;
-      const SUPER_BATCH_SIZE = 10;
+      await sendProgressUpdate({
+        type: "batch_info",
+        batchSize: CONCURRENCY,
+        message: `Running ${CONCURRENCY} transcriptions in parallel`,
+      });
+
+      const results: SpeechSegment[] = new Array(validSegments.length);
       let completedCount = 0;
 
-      const processSegment = async (segment: SpeechSegment, index: number): Promise<SpeechSegment> => {
+      const processSegment = async (
+        segment: SpeechSegment,
+        index: number
+      ): Promise<SpeechSegment> => {
         const { start, end } = segment;
         const duration = end - start;
 
@@ -223,280 +233,170 @@ export async function POST(request: NextRequest) {
           type: "segment_processing",
           segmentIndex: index,
           currentSegment: index + 1,
-          totalSegments: segmentsToProcess.length,
-          percent: Math.round(((index + 1) / segmentsToProcess.length) * 100),
+          totalSegments: validSegments.length,
+          percent: Math.round(
+            ((completedCount + 1) / validSegments.length) * 100
+          ),
           segmentInfo: {
             start: start.toFixed(2),
             end: end.toFixed(2),
             duration: duration.toFixed(2),
           },
-          message: `Processing segment ${index + 1}/${segmentsToProcess.length}: ${start.toFixed(2)}s to ${end.toFixed(2)}s`,
+          message: `Processing segment ${index + 1}/${validSegments.length}: ${start.toFixed(2)}s to ${end.toFixed(2)}s`,
         });
 
         if (duration < 0.1) {
-          return {
-            ...segment,
-            text: "No speech detected",
-            skipped: true,
-          };
+          return { ...segment, text: "No speech detected", skipped: true };
         }
 
-        const segmentPath = path.join(tempDir, `segment_chunk_${index}.mp3`);
+        const segmentPath = path.join(
+          tempDir,
+          `segment_${process.pid}_${Date.now()}_${index}.mp3`
+        );
         tempFiles.push(segmentPath);
 
         try {
-          await sendProgressUpdate({
-            type: "status",
-            segmentIndex: index,
-            status: "extracting",
-            currentSegment: index + 1,
-            totalSegments: segmentsToProcess.length,
-            message: `Extracting audio for segment ${index + 1}/${segmentsToProcess.length}`,
-          });
-
+          // Fast-seek on the pre-extracted PCM WAV (`-ss` before `-i` is
+          // constant-time for PCM). Re-encode to MP3: self-syncing frame
+          // headers are robust to server-side parsing, unlike stream-copied
+          // WAV which can have RIFF-size quirks.
           await withTimeout(
             execAsync(
-              `ffmpeg -i "${videoPath}" -ss ${start} -t ${duration} -ar 16000 -ac 1 -af "volume=2.0,highpass=f=200,lowpass=f=3000,loudnorm=I=-16:TP=-1.5:LRA=11" -c:a libmp3lame -q:a 2 "${segmentPath}"`
+              `ffmpeg -y -ss ${start} -i "${audioSourcePath}" -t ${duration} -c:a libmp3lame -q:a 4 "${segmentPath}"`
             ),
-            60000,
-            `FFmpeg extraction timed out for segment ${index + 1}`
+            FFMPEG_TIMEOUT_MS,
+            `FFmpeg slice timed out for segment ${index + 1}`
           );
 
-          if (!fs.existsSync(segmentPath) || fs.statSync(segmentPath).size === 0) {
-            await sendProgressUpdate({
-              type: "segment_error",
-              currentSegment: index + 1,
-              totalSegments: segmentsToProcess.length,
-              message: `Error: Failed to extract audio for segment ${index + 1}`,
-            });
+          if (
+            !fs.existsSync(segmentPath) ||
+            fs.statSync(segmentPath).size < 512
+          ) {
             return {
               ...segment,
               text: "No speech detected",
-              error: "Failed to extract audio segment",
+              error: "Audio segment too small for transcription",
             };
           }
 
-          const fileSizeBytes = fs.statSync(segmentPath).size;
-
-          if (fileSizeBytes < 512) {
-            try {
-              await withTimeout(
-                execAsync(
-                  `ffmpeg -i "${videoPath}" -ss ${start} -t ${duration} -ar 16000 -ac 1 -af "volume=4.0,highpass=f=200,lowpass=f=3000,loudnorm=I=-16:TP=-1.5:LRA=11" -c:a libmp3lame -q:a 2 "${segmentPath}"`
-                ),
-                30000,
-                `FFmpeg extraction retry timed out for segment ${index + 1}`
-              );
-
-              const newSizeBytes = fs.statSync(segmentPath).size;
-
-              if (newSizeBytes < 512) {
-                await sendProgressUpdate({
-                  type: "segment_warning",
-                  currentSegment: index + 1,
-                  totalSegments: segmentsToProcess.length,
-                  message: `Skipping segment ${index + 1}: audio file too small for transcription even after volume boost`,
-                });
-                return {
-                  ...segment,
-                  text: "No speech detected",
-                  error: "Audio segment too small for transcription",
-                };
-              }
-            } catch (error) {
-              await sendProgressUpdate({
-                type: "segment_warning",
-                currentSegment: index + 1,
-                totalSegments: segmentsToProcess.length,
-                message: `Skipping segment ${index + 1}: audio file too small for transcription`,
-              });
-              return {
-                ...segment,
-                text: "No speech detected",
-                error: "Audio segment too small for transcription",
-              };
-            }
-          }
-
-          try {
-            await sendProgressUpdate({
-              type: "status",
-              segmentIndex: index,
-              status: "transcribing",
-              currentSegment: index + 1,
-              totalSegments: segmentsToProcess.length,
-              message: `Transcribing audio for segment ${index + 1}/${segmentsToProcess.length}`,
-            });
-
-            if (!fs.existsSync(segmentPath)) {
-              throw new Error(`File ${segmentPath} does not exist`);
-            }
-
+          let lastErr: any;
+          for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
             const fileStream = fs.createReadStream(segmentPath);
+            try {
+              const transcription = await withTimeout(
+                groq.audio.transcriptions.create({
+                  file: fileStream,
+                  model: "whisper-large-v3-turbo",
+                  response_format: "verbose_json",
+                  temperature: 0.0,
+                }),
+                GROQ_TIMEOUT_MS,
+                `Transcription timed out for segment ${index + 1}`
+              );
+              fileStream.close();
+              const transcriptionText = transcription.text?.trim() || "";
 
-            const transcription = await withTimeout(
-              groq.audio.transcriptions.create({
-                file: fileStream,
-                model: "distil-whisper-large-v3-en",
-                response_format: "verbose_json",
-                temperature: 0.0,
-              }),
-              30000,
-              `Transcription timed out for segment ${index + 1}`
-            );
+              await sendProgressUpdate({
+                type: "segment_complete",
+                segmentIndex: index,
+                currentSegment: index + 1,
+                totalSegments: validSegments.length,
+                result: transcriptionText,
+                segment: { ...segment, text: transcriptionText },
+                message: `Completed segment ${index + 1}/${validSegments.length}`,
+              });
 
-            fileStream.close();
-
-            const transcriptionText = transcription.text?.trim() || "";
-
-            await sendProgressUpdate({
-              type: "segment_complete",
-              segmentIndex: index,
-              currentSegment: index + 1,
-              totalSegments: segmentsToProcess.length,
-              result: transcriptionText,
-              segment: {
-                ...segment,
-                text: transcriptionText,
-              },
-              message: `Completed segment ${index + 1}/${segmentsToProcess.length}`,
-            });
-
-            return {
-              ...segment,
-              text: transcriptionText,
-            };
-          } catch (error) {
-            let errorMessage = "Failed to transcribe";
-            if (error instanceof Error) {
-              if (error.message.includes("could not be decoded") || error.message.includes("decode")) {
-                errorMessage = "Audio format incompatible with Groq API";
-              } else if (error.message.includes("too short") || error.message.includes("duration too short")) {
-                errorMessage = "Audio segment too short for transcription";
-              } else if (error.message.includes("timed out")) {
-                errorMessage = "Transcription request timed out";
-              } else if (error.message.includes("authenticate") || error.message.includes("authentication") || error.message.includes("API key")) {
-                errorMessage = "Invalid Groq API key or authentication error";
-              } else if (error.message.includes("rate limit") || error.message.includes("rate_limit")) {
-                errorMessage = "Groq API rate limit exceeded";
+              return { ...segment, text: transcriptionText };
+            } catch (err: any) {
+              try {
+                fileStream.close();
+              } catch {
+                /* noop */
               }
+              lastErr = err;
+              const status =
+                err?.status ??
+                err?.response?.status ??
+                err?.cause?.status;
+              const msg = String(err?.message || "");
+              const isRateLimited =
+                status === 429 || /rate.?limit/i.test(msg);
+              const isTransient =
+                status === 500 ||
+                status === 502 ||
+                status === 503 ||
+                status === 504;
+              if (
+                (isRateLimited || isTransient) &&
+                attempt < MAX_RETRIES
+              ) {
+                const backoff = Math.min(
+                  30_000,
+                  1000 * Math.pow(2, attempt) + Math.random() * 500
+                );
+                await new Promise((r) => setTimeout(r, backoff));
+                continue;
+              }
+              throw err;
             }
-
-            await sendProgressUpdate({
-              type: "segment_error",
-              currentSegment: index + 1,
-              totalSegments: segmentsToProcess.length,
-              error: errorMessage,
-              message: `Error transcribing segment ${index + 1}: ${errorMessage}`,
-            });
-
-            return {
-              ...segment,
-              text: "",
-              error: errorMessage,
-            };
           }
+          throw lastErr;
         } catch (error) {
-          let errorMsg = "Failed to extract audio segment";
-          if (error instanceof Error && error.message.includes("timed out")) {
-            errorMsg = "FFmpeg extraction timed out";
-          }
+          const rawMessage =
+            error instanceof Error ? error.message : String(error);
+          let errorMessage = rawMessage || "Failed to transcribe";
+          if (/could not be decoded|decode/i.test(rawMessage))
+            errorMessage = "Audio format incompatible with Groq API";
+          else if (/too short|duration too short/i.test(rawMessage))
+            errorMessage = "Audio segment too short for transcription";
+          else if (/timed out/i.test(rawMessage))
+            errorMessage = "Transcription request timed out";
+          else if (/authenticate|authentication|API key/i.test(rawMessage))
+            errorMessage = "Invalid Groq API key or authentication error";
+          else if (/rate.?limit/i.test(rawMessage))
+            errorMessage = "Groq API rate limit exceeded";
+
+          console.error(
+            `[transcribe-chunked] segment ${index + 1} (${segment.start}-${segment.end}s) failed:`,
+            rawMessage
+          );
 
           await sendProgressUpdate({
             type: "segment_error",
+            segmentIndex: index,
             currentSegment: index + 1,
-            totalSegments: segmentsToProcess.length,
-            error: errorMsg,
-            message: `Error with segment ${index + 1}: ${errorMsg}`,
+            totalSegments: validSegments.length,
+            error: errorMessage,
+            message: `Error on segment ${index + 1}: ${errorMessage}`,
           });
 
-          return {
-            ...segment,
-            text: "",
-            error: errorMsg,
-          };
+          return { ...segment, text: "", error: errorMessage };
         }
       };
 
-      await sendProgressUpdate({
-        type: "batch_info",
-        batchSize: BATCH_SIZE,
-        message: `Processing segments sequentially to avoid Groq API rate limits`,
-      });
-
-      for (let superBatchIndex = 0; superBatchIndex < Math.ceil(segmentsToProcess.length / SUPER_BATCH_SIZE); superBatchIndex++) {
-        const startSegmentIndex = superBatchIndex * SUPER_BATCH_SIZE;
-        const endSegmentIndex = Math.min(startSegmentIndex + SUPER_BATCH_SIZE, segmentsToProcess.length);
-        const currentSuperBatch = segmentsToProcess.slice(startSegmentIndex, endSegmentIndex);
-
-        await sendProgressUpdate({
-          type: "super_batch_start",
-          superBatchNumber: superBatchIndex + 1,
-          totalSuperBatches: Math.ceil(segmentsToProcess.length / SUPER_BATCH_SIZE),
-          startSegment: startSegmentIndex + 1,
-          endSegment: endSegmentIndex,
-          completedCount,
-          totalCount: segmentsToProcess.length,
-          percent: Math.round((completedCount / segmentsToProcess.length) * 100),
-          message: `Processing segments ${startSegmentIndex + 1} to ${endSegmentIndex} of ${segmentsToProcess.length} (Completed: ${completedCount})`,
-        });
-
-        for (let i = 0; i < currentSuperBatch.length; i += BATCH_SIZE) {
-          const batch = currentSuperBatch.slice(i, i + BATCH_SIZE);
-          const batchStartIndex = startSegmentIndex + i;
-
+      // Worker-pool concurrency: CONCURRENCY workers drain a shared index.
+      let nextIdx = 0;
+      const workers = Array.from({ length: CONCURRENCY }, async () => {
+        while (true) {
+          const idx = nextIdx++;
+          if (idx >= validSegments.length) return;
+          const result = await processSegment(validSegments[idx], idx);
+          results[idx] = result;
+          completedCount++;
           await sendProgressUpdate({
-            type: "batch_start",
-            batchNumber: Math.floor(batchStartIndex / BATCH_SIZE) + 1,
-            totalBatches: Math.ceil(segmentsToProcess.length / BATCH_SIZE),
-            superBatchNumber: superBatchIndex + 1,
-            startSegment: batchStartIndex + 1,
-            endSegment: Math.min(batchStartIndex + BATCH_SIZE, segmentsToProcess.length),
-            message: `Processing batch ${Math.floor(batchStartIndex / BATCH_SIZE) + 1}/${Math.ceil(segmentsToProcess.length / BATCH_SIZE)}`,
+            type: "progress",
+            completedCount,
+            totalCount: validSegments.length,
+            percent: Math.round(
+              (completedCount / validSegments.length) * 100
+            ),
+            message: `Completed ${completedCount}/${validSegments.length}`,
           });
-
-          const batchPromises = batch.map((segment, index) => ({
-            index: batchStartIndex + index,
-            promise: processSegment(segment, batchStartIndex + index),
-          }));
-
-          const results = await Promise.allSettled(batchPromises.map((item) => item.promise));
-
-          for (let j = 0; j < results.length; j++) {
-            const result = results[j];
-            completedCount++;
-
-            if (result.status === "fulfilled") {
-              processedSegments.push(result.value);
-            } else {
-              processedSegments.push({
-                ...batch[j],
-                text: "",
-                error: "Failed to process segment: " + (result.reason?.message || "Unknown error"),
-              });
-            }
-          }
-
-          if (i + BATCH_SIZE < currentSuperBatch.length) {
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-          }
         }
+      });
+      await Promise.all(workers);
 
-        await sendProgressUpdate({
-          type: "super_batch_complete",
-          superBatchNumber: superBatchIndex + 1,
-          totalSuperBatches: Math.ceil(segmentsToProcess.length / SUPER_BATCH_SIZE),
-          completedCount,
-          totalCount: segmentsToProcess.length,
-          percent: Math.round((completedCount / segmentsToProcess.length) * 100),
-          message: `Completed segments ${startSegmentIndex + 1} to ${endSegmentIndex} of ${segmentsToProcess.length} (Total completed: ${completedCount})`,
-        });
-
-        if (superBatchIndex + 1 < Math.ceil(segmentsToProcess.length / SUPER_BATCH_SIZE)) {
-          await new Promise((resolve) => setTimeout(resolve, 5000));
-        }
-      }
-
+      const processedSegments = results.filter(Boolean);
       const allSegments = segments.map((segment) => {
         const processed = processedSegments.find(
           (s) => s.start === segment.start && s.end === segment.end
@@ -510,32 +410,30 @@ export async function POST(request: NextRequest) {
         processedCount: processedSegments.length,
         totalCount: segments.length,
         language: normalizedLanguage,
-        languageCode: languageCode,
+        languageCode,
         message: `Transcription complete. Processed ${processedSegments.length} of ${segments.length} segments.`,
       });
 
-      await cleanupTempFiles(tempFiles.filter((file) => file !== videoPath));
+      await cleanupTempFiles(tempFiles);
     } catch (error) {
-      if (error instanceof Error) {
-        await sendProgressUpdate({
-          type: "error",
-          message: error.message || "Failed to transcribe video",
-        });
-      } else {
-        await sendProgressUpdate({
-          type: "error",
-          message: "Failed to transcribe video. An unknown error occurred.",
-        });
-      }
-
+      await sendProgressUpdate({
+        type: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Failed to transcribe video. An unknown error occurred.",
+      });
       try {
         await cleanupTempFiles(tempFiles);
       } catch (cleanupError) {
         console.error("Error during cleanup:", cleanupError);
       }
     } finally {
-      clearTimeout(globalTimeoutId);
-      await writer.close();
+      try {
+        await writer.close();
+      } catch {
+        /* writer may already be closed */
+      }
     }
   };
 
@@ -548,21 +446,4 @@ export async function POST(request: NextRequest) {
       Connection: "keep-alive",
     },
   });
-}
-
-// Helper function to clean up temp files asynchronously
-async function cleanupTempFiles(filePaths: string[]) {
-  for (const filePath of filePaths) {
-    try {
-      if (fs.existsSync(filePath)) {
-        // For Windows, attempt to wait a moment before deleting to allow handles to be released
-        await new Promise((resolve) => setTimeout(resolve, 100));
-        await unlinkAsync(filePath);
-        console.log(`Successfully deleted temp file: ${filePath}`);
-      }
-    } catch (e) {
-      console.warn(`Failed to delete temp file: ${filePath}`, e);
-      // Continue with other files even if one fails to delete
-    }
-  }
 }

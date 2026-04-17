@@ -1,11 +1,6 @@
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -14,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Volume1, Volume2 } from "lucide-react";
 import { formatLanguage } from "@/app/utils/formatters";
 import { DialogControls } from "./types";
 
@@ -25,11 +21,68 @@ interface SpeechControlsProps {
   isDialogProcessing: boolean;
   isTranscribing: boolean;
   transcriptionProgress: string;
+  isCreatingRequest?: boolean;
+  isReadingResponse?: boolean;
+  aiExchangeStatus?: string | null;
+  aiExchangePath?: string | null;
+  aiExchangePrompt?: string | null;
+  cachedTranscriptionAvailable?: boolean;
   onControlChange: (key: keyof DialogControls, value: number) => void;
   onApplyChanges: () => void;
   onTranscribe: () => void;
   onLanguageChange: (language: string) => void;
+  onCreateThresholdRequest?: () => void;
+  onSetThresholdFromResponse?: () => void;
   progressButton?: React.ReactNode;
+}
+
+interface DurationFieldProps {
+  id: string;
+  label: string;
+  description: string;
+  value: number;
+  min?: number;
+  max?: number;
+  step?: number;
+  onChange: (value: number) => void;
+}
+
+function DurationField({
+  id,
+  label,
+  description,
+  value,
+  min = 0,
+  max = 10000,
+  step = 1,
+  onChange,
+}: DurationFieldProps) {
+  return (
+    <div className="space-y-1">
+      <Label htmlFor={id} className="text-sm font-semibold">
+        {label}
+      </Label>
+      <p className="text-xs text-gray-500">{description}</p>
+      <div className="relative">
+        <Input
+          id={id}
+          type="number"
+          value={Number.isFinite(value) ? value : 0}
+          min={min}
+          max={max}
+          step={step}
+          onChange={(e) => {
+            const next = Number(e.target.value);
+            if (!Number.isNaN(next)) onChange(next);
+          }}
+          className="pr-28 font-mono"
+        />
+        <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-500 font-mono">
+          milliseconds
+        </span>
+      </div>
+    </div>
+  );
 }
 
 export function SpeechControls({
@@ -40,130 +93,181 @@ export function SpeechControls({
   isDialogProcessing,
   isTranscribing,
   transcriptionProgress,
+  isCreatingRequest = false,
+  isReadingResponse = false,
+  aiExchangeStatus = null,
+  aiExchangePath = null,
+  aiExchangePrompt = null,
+  cachedTranscriptionAvailable = false,
   onControlChange,
   onApplyChanges,
   onTranscribe,
   onLanguageChange,
+  onCreateThresholdRequest,
+  onSetThresholdFromResponse,
   progressButton,
 }: SpeechControlsProps) {
   return (
     <div className="mt-4 p-4 border-2 border-black bg-gray-50">
       <h3 className="text-sm font-bold mb-3">Adjust Speech Detection</h3>
 
-      <TooltipProvider>
-        <div className="space-y-4">
-          <div className="parameter-control">
-            <div className="parameter-header">
-              <Label htmlFor="dialogVolumeThreshold">Volume Threshold</Label>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className="ml-2 cursor-help rounded-full border border-gray-400 px-1 text-xs">
-                    ?
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent className="max-w-80">
-                  <p>
-                    Frames with volume higher than this percentage are
-                    considered speech. Higher values are more selective and will
-                    remove more silence.
-                  </p>
-                </TooltipContent>
-              </Tooltip>
-              <span className="parameter-value">
-                {dialogControls.volumeThreshold}%
-              </span>
-            </div>
-            <Slider
-              id="dialogVolumeThreshold"
-              value={[dialogControls.volumeThreshold]}
-              min={5}
-              max={100}
-              step={1}
-              onValueChange={(value) =>
-                onControlChange("volumeThreshold", value[0])
-              }
-            />
+      <div className="space-y-6">
+        <section className="border-l-2 border-black/20 pl-4 space-y-4">
+          <h4 className="text-base font-bold">Silence Duration</h4>
+
+          <DurationField
+            id="removeSilencesLongerThanMs"
+            label="Remove Silences Longer Than"
+            description="Minimum duration (ms) to remove silences."
+            value={dialogControls.removeSilencesLongerThanMs}
+            min={0}
+            max={10000}
+            step={10}
+            onChange={(v) => onControlChange("removeSilencesLongerThanMs", v)}
+          />
+
+          <DurationField
+            id="keepTalksLongerThanMs"
+            label="Keep Talks Longer Than"
+            description="Minimum duration (ms) to retain talk segments."
+            value={dialogControls.keepTalksLongerThanMs}
+            min={0}
+            max={10000}
+            step={10}
+            onChange={(v) => onControlChange("keepTalksLongerThanMs", v)}
+          />
+        </section>
+
+        <section className="border-l-2 border-black/20 pl-4 space-y-4">
+          <h4 className="text-base font-bold">Margin</h4>
+
+          <DurationField
+            id="marginBeforeMs"
+            label="Margin before by"
+            description="Silent time after noise to ensure smooth speech end."
+            value={dialogControls.marginBeforeMs}
+            min={0}
+            max={2000}
+            step={10}
+            onChange={(v) => onControlChange("marginBeforeMs", v)}
+          />
+
+          <DurationField
+            id="marginAfterMs"
+            label="Margin after by"
+            description="Silent time before noise to ensure smooth speech start."
+            value={dialogControls.marginAfterMs}
+            min={0}
+            max={2000}
+            step={10}
+            onChange={(v) => onControlChange("marginAfterMs", v)}
+          />
+        </section>
+
+        <section className="border-l-2 border-black/20 pl-4 space-y-3">
+          <div>
+            <h4 className="text-base font-bold">Noise Threshold</h4>
+            <p className="text-xs text-gray-500">
+              Set the sound level to identify silences, visible below.
+            </p>
           </div>
 
-          <div className="parameter-control">
-            <div className="parameter-header">
-              <Label htmlFor="dialogSpeechPaddingMs">Speech Padding</Label>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className="ml-2 cursor-help rounded-full border border-gray-400 px-1 text-xs">
-                    ?
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent className="max-w-80">
-                  <p>
-                    Additional time (in milliseconds) to keep before and after
-                    each speech segment.
-                  </p>
-                </TooltipContent>
-              </Tooltip>
-              <span className="parameter-value">
-                {dialogControls.speechPaddingMs}ms
+          <div className="flex items-center gap-3">
+            <Volume1 className="h-5 w-5 text-gray-500 shrink-0" />
+            <div className="flex-1 flex flex-col items-center gap-1">
+              <Slider
+                id="noiseThresholdDb"
+                value={[dialogControls.noiseThresholdDb]}
+                min={-80}
+                max={0}
+                step={1}
+                onValueChange={(value) =>
+                  onControlChange("noiseThresholdDb", value[0])
+                }
+              />
+              <span className="text-xs font-mono text-gray-600">
+                {dialogControls.noiseThresholdDb}dB
               </span>
             </div>
-            <Slider
-              id="dialogSpeechPaddingMs"
-              value={[dialogControls.speechPaddingMs]}
-              min={0}
-              max={500}
-              step={10}
-              onValueChange={(value) =>
-                onControlChange("speechPaddingMs", value[0])
-              }
-            />
+            <Volume2 className="h-5 w-5 text-gray-500 shrink-0" />
           </div>
 
-          <div className="parameter-control">
-            <div className="parameter-header">
-              <Label htmlFor="dialogSilencePaddingMs">Silence Padding</Label>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className="ml-2 cursor-help rounded-full border border-gray-400 px-1 text-xs">
-                    ?
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent className="max-w-80">
-                  <p>
-                    Maximum silence duration (in milliseconds) that will be treated as part of a continuous speech segment. Silences shorter than this value will merge adjacent speech segments.
-                  </p>
-                </TooltipContent>
-              </Tooltip>
-              <span className="parameter-value">
-                {dialogControls.silencePaddingMs}ms
-              </span>
+          <div className="flex flex-col items-center gap-2">
+            <div className="flex items-center gap-2">
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                onClick={onCreateThresholdRequest}
+                disabled={isCreatingRequest || !onCreateThresholdRequest}
+              >
+                {isCreatingRequest ? "Creating…" : "Create JSON"}
+              </Button>
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                onClick={onSetThresholdFromResponse}
+                disabled={isReadingResponse || !onSetThresholdFromResponse}
+              >
+                {isReadingResponse ? "Reading…" : "Set from Response"}
+              </Button>
             </div>
-            <Slider
-              id="dialogSilencePaddingMs"
-              value={[dialogControls.silencePaddingMs]}
-              min={0}
-              max={1000}
-              step={50}
-              onValueChange={(value) =>
-                onControlChange("silencePaddingMs", value[0])
-              }
-            />
+            {aiExchangePath && (
+              <p className="text-[11px] font-mono text-gray-500 break-all text-center">
+                {aiExchangePath}
+              </p>
+            )}
+            {aiExchangePrompt && (
+              <div className="w-full flex items-stretch gap-2">
+                <code
+                  className="flex-1 text-xs font-mono bg-white border-2 border-black px-2 py-1.5 select-all break-all"
+                  onClick={(e) => {
+                    const range = document.createRange();
+                    range.selectNodeContents(e.currentTarget);
+                    const sel = window.getSelection();
+                    sel?.removeAllRanges();
+                    sel?.addRange(range);
+                  }}
+                >
+                  {aiExchangePrompt}
+                </code>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard?.writeText(aiExchangePrompt);
+                  }}
+                  className="text-xs font-bold px-2 py-1 border-2 border-black bg-yellow-200 hover:bg-yellow-300"
+                >
+                  Copy
+                </button>
+              </div>
+            )}
+            {aiExchangeStatus && (
+              <p className="text-xs text-gray-600 text-center">
+                {aiExchangeStatus}
+              </p>
+            )}
           </div>
+        </section>
 
-          <div className="flex justify-center gap-4 mt-6 items-center flex-col">
-            <Button
-              onClick={onApplyChanges}
-              disabled={isDialogProcessing}
-              className="neo-brutalism-button bg-green-500 hover:bg-green-600 text-white"
-            >
-              {isDialogProcessing ? (
-                <>
-                  <div className="animate-spin h-5 w-5 border-2 border-white rounded-full border-t-transparent mr-2"></div>
-                  Processing...
-                </>
-              ) : (
-                "Apply Changes"
-              )}
-            </Button>
+        <div className="flex justify-center gap-4 mt-6 items-center flex-col">
+          <Button
+            onClick={onApplyChanges}
+            disabled={isDialogProcessing}
+            className="neo-brutalism-button bg-green-500 hover:bg-green-600 text-white"
+          >
+            {isDialogProcessing ? (
+              <>
+                <div className="animate-spin h-5 w-5 border-2 border-white rounded-full border-t-transparent mr-2"></div>
+                Processing...
+              </>
+            ) : (
+              "Apply Changes"
+            )}
+          </Button>
 
+          <div className="flex flex-col items-center gap-1">
             <div className="flex items-center gap-2">
               {isTranscribing ? (
                 <>{progressButton}</>
@@ -173,43 +277,52 @@ export function SpeechControls({
                   disabled={isTranscribing}
                   className="neo-brutalism-button bg-blue-500 hover:bg-blue-600 text-white"
                 >
-                  Transcribe
+                  {cachedTranscriptionAvailable
+                    ? "Transcribe (cached — instant)"
+                    : "Transcribe"}
                 </Button>
               )}
             </div>
-          </div>
-
-          <div className="mt-4 border-t-2 border-gray-200 pt-4">
-            <div className="flex items-center justify-between mb-2">
-              <Label
-                htmlFor="transcribeLanguage"
-                className="text-sm font-medium"
-              >
-                Transcription Language
-              </Label>
-              <span className="text-xs text-gray-500">
-                Selected: {formatLanguage(selectedLanguage)}
-              </span>
-            </div>
-            <Select value={selectedLanguage} onValueChange={onLanguageChange}>
-              <SelectTrigger className="w-full" id="transcribeLanguage">
-                <SelectValue placeholder="Select language" />
-              </SelectTrigger>
-              <SelectContent className="max-h-[300px]">
-                {supportedLanguages.map((lang) => (
-                  <SelectItem key={lang} value={lang}>
-                    {formatLanguage(lang)}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <p className="text-xs text-gray-500 mt-1">
-              Choose the primary language spoken in the video for more accurate
-              transcription
-            </p>
+            {cachedTranscriptionAvailable && !isTranscribing && (
+              <p className="text-[11px] text-gray-500">
+                Existing transcription found in{" "}
+                <code>public/transcriptions/</code> — clicking Transcribe
+                reuses it instead of re-processing.
+              </p>
+            )}
           </div>
         </div>
-      </TooltipProvider>
+
+        <div className="mt-4 border-t-2 border-gray-200 pt-4">
+          <div className="flex items-center justify-between mb-2">
+            <Label
+              htmlFor="transcribeLanguage"
+              className="text-sm font-medium"
+            >
+              Transcription Language
+            </Label>
+            <span className="text-xs text-gray-500">
+              Selected: {formatLanguage(selectedLanguage)}
+            </span>
+          </div>
+          <Select value={selectedLanguage} onValueChange={onLanguageChange}>
+            <SelectTrigger className="w-full" id="transcribeLanguage">
+              <SelectValue placeholder="Select language" />
+            </SelectTrigger>
+            <SelectContent className="max-h-[300px]">
+              {supportedLanguages.map((lang) => (
+                <SelectItem key={lang} value={lang}>
+                  {formatLanguage(lang)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <p className="text-xs text-gray-500 mt-1">
+            Choose the primary language spoken in the video for more accurate
+            transcription
+          </p>
+        </div>
+      </div>
 
       {isDialogProcessing && (
         <div className="flex items-center justify-center mt-4 text-sm text-gray-500">
