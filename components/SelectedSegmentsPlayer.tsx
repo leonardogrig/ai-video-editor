@@ -11,6 +11,7 @@ import { XmlSettingsDialog } from "./XmlSettingsDialog";
 import { CaptionInstructions } from "./CaptionInstructionsBlock";
 import { formatTime } from "../lib/utils";
 import { downloadSrt, downloadXml, downloadJson, getBaseFilename } from "../lib/exportUtils";
+import { renderFinalVideo, UploadInfo } from "../app/services/videoService";
 
 // Use SpeechSegment as TranscribedSegment type alias
 type TranscribedSegment = SpeechSegment;
@@ -24,6 +25,8 @@ interface SelectedSegmentsPlayerProps {
   silenceSegments?: TranscribedSegment[];
   videoFileName?: string;
   videoFilePath?: string;
+  videoFile?: File | null;
+  uploadInfo?: UploadInfo | null;
 }
 
 export function SelectedSegmentsPlayer({
@@ -34,7 +37,9 @@ export function SelectedSegmentsPlayer({
   model,
   silenceSegments = [],
   videoFileName,
-  videoFilePath
+  videoFilePath,
+  videoFile,
+  uploadInfo,
 }: SelectedSegmentsPlayerProps) {
   const [editingSegment, setEditingSegment] = useState<{
     index: number;
@@ -43,6 +48,39 @@ export function SelectedSegmentsPlayer({
   } | null>(null);
   const [activeSegment, setActiveSegment] = useState<TranscribedSegment | null>(null);
   const audioPlayerRef = useRef<AudioPlayerHandle>(null);
+  const [isRendering, setIsRendering] = useState(false);
+  const [renderStatus, setRenderStatus] = useState<string>("");
+  const [renderError, setRenderError] = useState<string | null>(null);
+
+  const handleDownloadFinalVideo = async () => {
+    if (isRendering) return;
+    setIsRendering(true);
+    setRenderError(null);
+    setRenderStatus("Preparing render...");
+    try {
+      const { blob, fileName } = await renderFinalVideo(
+        videoFile ?? null,
+        uploadInfo ?? null,
+        (p) => {
+          if (p.message) setRenderStatus(p.message);
+        }
+      );
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      setRenderStatus("Download started.");
+    } catch (err) {
+      setRenderError(err instanceof Error ? err.message : String(err));
+      setRenderStatus("");
+    } finally {
+      setIsRendering(false);
+    }
+  };
 
   // Check if a segment exists in the segments array
   const isSegmentSelected = (segment: TranscribedSegment): boolean => {
@@ -168,6 +206,32 @@ export function SelectedSegmentsPlayer({
               Filtered using: <span className="font-mono">{model.split('/').pop()}</span>
             </div>
           )}
+
+          {/* Final video render/download */}
+          <div className="flex flex-wrap items-center gap-3 p-3 border-2 border-black bg-yellow-50 rounded">
+            <Button
+              onClick={handleDownloadFinalVideo}
+              disabled={isRendering || (!videoFile && !uploadInfo)}
+              className="neo-brutalism-button bg-black text-yellow-300 hover:bg-gray-800 disabled:opacity-60"
+            >
+              {isRendering ? "Rendering..." : "Download Final Video"}
+            </Button>
+            <div className="text-xs text-gray-700">
+              Cuts the source video to the {segments.length} filtered segments in
+              <span className="font-mono"> edited.json</span> via ffmpeg.
+            </div>
+            {renderStatus && (
+              <div className="text-xs text-gray-600 basis-full">{renderStatus}</div>
+            )}
+            {renderError && (
+              <div className="text-xs text-red-600 basis-full">{renderError}</div>
+            )}
+            {!videoFile && !uploadInfo && (
+              <div className="text-xs text-red-600 basis-full">
+                Re-select the source video above to enable rendering.
+              </div>
+            )}
+          </div>
 
           {/* Audio Player Component */}
           <AudioPlayer 

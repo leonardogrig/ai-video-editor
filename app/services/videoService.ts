@@ -9,16 +9,18 @@ function generateSessionId() {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
 }
 
-// Helper function to upload a file in chunks
-async function uploadFileInChunks(
-  file: File,
-  onProgress?: (progress: number) => void
-): Promise<{
+export interface UploadInfo {
   filePath: string;
   fileName: string;
   fileSize: number;
   sessionId: string;
-}> {
+}
+
+// Helper function to upload a file in chunks
+export async function uploadFileInChunks(
+  file: File,
+  onProgress?: (progress: number) => void
+): Promise<UploadInfo> {
   const sessionId = generateSessionId();
   const chunkSize = 5 * 1024 * 1024;
   const totalChunks = Math.ceil(file.size / chunkSize);
@@ -554,6 +556,68 @@ export async function getRawTranscriptionPath(): Promise<
 > {
   const response = await fetch("/api/transcription-raw-path");
   return response.json();
+}
+
+export async function renderFinalVideo(
+  videoFile: File | null,
+  uploadInfo: UploadInfo | null,
+  onProgress?: (progressData: {
+    type: "upload_progress" | "status";
+    progress?: number;
+    message?: string;
+  }) => void
+): Promise<{ blob: Blob; fileName: string }> {
+  let effectiveUpload = uploadInfo;
+
+  if (!effectiveUpload) {
+    if (!videoFile) {
+      throw new Error("No video file available to render");
+    }
+    onProgress?.({
+      type: "status",
+      message: "Uploading video for rendering...",
+    });
+    effectiveUpload = await uploadFileInChunks(videoFile, (progress) => {
+      onProgress?.({
+        type: "upload_progress",
+        progress,
+        message: `Uploading video for rendering: ${progress}%`,
+      });
+    });
+  }
+
+  onProgress?.({
+    type: "status",
+    message: "Rendering final video with ffmpeg...",
+  });
+
+  const response = await fetch("/api/render-video", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      filePath: effectiveUpload.filePath,
+      fileName: effectiveUpload.fileName,
+    }),
+    signal: AbortSignal.timeout(30 * 60 * 1000),
+  });
+
+  if (!response.ok) {
+    let msg = `Failed to render video (${response.status})`;
+    try {
+      const data = await response.json();
+      if (data?.error) msg = data.error;
+    } catch {}
+    throw new Error(msg);
+  }
+
+  const blob = await response.blob();
+
+  const disposition = response.headers.get("Content-Disposition") ?? "";
+  const match = disposition.match(/filename="?([^";]+)"?/i);
+  const base = effectiveUpload.fileName.replace(/\.[^/.]+$/, "");
+  const fileName = match?.[1] ?? `${base}_edited.mp4`;
+
+  return { blob, fileName };
 }
 
 export async function importEditedTranscription(): Promise<

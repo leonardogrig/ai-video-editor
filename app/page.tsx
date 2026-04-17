@@ -762,6 +762,8 @@ export default function Home() {
             silenceSegments={silenceSegments || []}
             videoFileName={videoFileName || ""}
             videoFilePath={videoFilePath || ""}
+            videoFile={videoFile}
+            uploadInfo={uploadInfo}
           />
         )}
 
