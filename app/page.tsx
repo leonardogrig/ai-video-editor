@@ -691,9 +691,7 @@ export default function Home() {
       <style jsx global>
         {neoBrutalismStyles}
       </style>
-      <h1 className="text-4xl font-bold mb-8 text-center border-b-4 border-black pb-2">
-        Neobrutalist Video Silence Remover
-      </h1>
+  
 
       <div className="mx-auto max-w-[800px]">
         <UploadCard
